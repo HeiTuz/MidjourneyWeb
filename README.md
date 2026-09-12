@@ -106,7 +106,7 @@ Bring a logged-in Midjourney account with the relevant plan/GPU allowance, the h
 - The distribution archive was extracted, checked and installed successfully.
 - Authenticated website navigation, existing image actions, settings and several feature panels were inspected live.
 - New V8.2 creation, JPG/PNG reference upload, targeted color editing, candidate comparison and final in-app file delivery passed. The selected JPG and optional PNG are 1024×1024.
-- A local erase mask and Undo were exercised. The media bridge saved six real comparison/original assets, and the package passed 19 Node tests.
+- A local erase mask and Undo were exercised. The media bridge saved six real comparison/original assets, and the package passed 20 Node tests.
 
 **JPG is the default; PNG is ready when needed.** The ordinary in-app Download Image event remains unreliable, so the skill uses the verified asset-export route and optional media bridge. The source bridge PNG matched the website export's decoded pixels; website-added metadata differed. An accidental feed-overlay variation was identified and counted within the approved four-job test budget, motivating direct job-URL navigation. HD/upscale, generated mask/layer edits, other reference roles, preference training, board/folder mutations, Style Creator, batch archives and video delivery remain untested.
 

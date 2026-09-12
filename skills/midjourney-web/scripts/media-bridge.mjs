@@ -2,7 +2,8 @@
 // Render only observed CDN images so the host can export loaded image assets.
 // This helper does not fetch media, read credentials, or change the source site.
 import http from 'node:http';
-import { pathToFileURL } from 'node:url';
+import fs from 'node:fs';
+import { fileURLToPath } from 'node:url';
 
 export function mediaURL(value) {
   const url = new URL(value);
@@ -53,7 +54,7 @@ ${validated.map((url, i) => `<figure><figcaption>Asset ${i + 1}</figcaption><img
   });
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (process.argv[1] && fs.realpathSync(process.argv[1]) === fileURLToPath(import.meta.url)) {
   try {
     const urls = parseArgs(process.argv.slice(2));
     const server = createBridge(urls);

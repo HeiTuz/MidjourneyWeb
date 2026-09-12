@@ -3,6 +3,9 @@ import assert from 'node:assert/strict';
 import { once } from 'node:events';
 import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
 import { mediaURL, parseArgs, createBridge } from '../skills/midjourney-web/scripts/media-bridge.mjs';
 
 const image = 'https://cdn.midjourney.com/example/image.png?first=1&second=2';
@@ -46,4 +49,21 @@ test('actual bridge CLI reports a loopback URL and terminates cleanly', async t 
   child.kill('SIGTERM');
   const [code] = await exited;
   assert.equal(code, 0);
+});
+
+test('bridge CLI runs through a symlink or physical-path alias', async t => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'mj-bridge-alias-'));
+  t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
+  const alias = path.join(dir, 'bridge.mjs');
+  fs.symlinkSync(fileURLToPath(new URL('../skills/midjourney-web/scripts/media-bridge.mjs', import.meta.url)), alias);
+  const child = spawn(process.execPath, [alias, '--url', image], { stdio: ['ignore', 'pipe', 'pipe'] });
+  t.after(() => child.kill('SIGTERM'));
+  const outcome = await Promise.race([
+    once(child.stdout, 'data').then(([data]) => JSON.parse(data.toString())),
+    once(child, 'exit').then(([code]) => { throw new Error(`Bridge exited before listening: ${code}`); }),
+  ]);
+  assert.equal((await fetch(outcome.url)).status, 200);
+  const exited = once(child, 'exit');
+  child.kill('SIGTERM');
+  assert.equal((await exited)[0], 0);
 });

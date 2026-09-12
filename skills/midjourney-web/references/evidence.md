@@ -38,7 +38,7 @@ Describe execution, HD/upscale, generated masked/layer edits, other reference ro
 
 ## Package verification
 
-Package/reference validation, the host skill validator and 19 Node tests passed. Tests cover the installer, safe replacement and rollback, all three host adapters, actual packed npm CLI execution, complete canonical/payload parity, and the media bridge's URL validation, loopback CLI and bounded HTTP surface. Final distribution and installation receipts are kept outside the repository.
+Package/reference validation, the host skill validator and 20 Node tests passed. Tests cover the installer, safe replacement and rollback, all three host adapters, actual packed npm CLI execution, complete canonical/payload parity, and the media bridge's URL validation, loopback CLI and bounded HTTP surface. An actual tarball install exposed a physical-path alias issue in the bridge entrypoint; resolving the real path fixed it, and a symlink-entry regression test was added. Final distribution and installation receipts are kept outside the repository.
 
 The Codex installation is a runtime copy containing the canonical references, bridge script and Codex host adapter. Claude/Hermes payloads are locally tested; their live browser workflows and Windows installation are not. Local artifact checks do not imply remote GitHub CI or publication. No remote, release tag or version bump was created.
 
