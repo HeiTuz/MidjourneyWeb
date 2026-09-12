@@ -16,4 +16,4 @@ jobs:
         with:
           node-version: '20'
       - run: python scripts/validate.py
-      - run: npm test
+      - run: npm run test:code

@@ -1,6 +1,8 @@
 # GitHub release procedure
 
-The repository is prepared locally; no remote publication is implied by these instructions.
+Publication must be verified against the intended commit and assets; these instructions alone do not establish publication.
+
+When the user excludes installation checks, run `npm run test:code` and `python3 scripts/validate.py`, inspect archive contents without executing the installer, and record that installation validation was skipped. Do not reinstall a local skill merely to validate a release. The default CI is code-only; `npm test` remains an explicitly selected full suite that includes installation tests.
 
 The source ZIP and npm tarball have different contracts. The ZIP contains maintenance scripts, tests and AGENTS.md; the npm tarball contains the installer and runtime inputs only. Run the package validator and tests on the checkout/source ZIP, and run the npm tarball's real CLI in an isolated destination. From the checkout, verify that destination with `node scripts/verify-install.mjs codex <installed-skill-directory>`. This compares every payload file and the selected host adapter with canonical bytes, checks the install manifest, and reports extra installed files.
 

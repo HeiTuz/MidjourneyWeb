@@ -19,6 +19,9 @@ export function verifyInstall(sourceRoot, destination, host) {
   let manifest;
   try { manifest = JSON.parse(fs.readFileSync(path.join(destination, '.midjourney-install.json'), 'utf8')); }
   catch { return ['Missing or invalid install manifest']; }
+  if (manifest === null || typeof manifest !== 'object' || Array.isArray(manifest)) {
+    return ['Missing or invalid install manifest'];
+  }
   if (manifest.host !== host) errors.push('Host mismatch');
   for (const file of files) {
     const installed = path.join(destination, file.to);

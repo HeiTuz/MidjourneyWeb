@@ -92,19 +92,21 @@ node scripts/install.mjs --target codex --force
 
 삭제할 때는 직접 추가한 자료를 보존한 뒤 설치된 `midjourney-web` 폴더를 제거하세요. 개발 정본은 별도로 유지하면 돼요. 스킬 목록 반영에 새 작업이 필요할 수 있어요.
 
-### GitHub 공개 후 사용할 한 줄 설치
+### GitHub 설치 명령
 
 ```sh
 npx --yes --allow-git=all --package github:HeiTuz/MidjourneyWeb heituz-midjourney -- --target codex
 ```
 
-**아직 원격 저장소를 공개하거나 이 GitHub 명령을 검증하지 않았어요.** 지금은 로컬 명령을 사용하세요. 공개 후 같은 명령에 `--force`를 붙여 업데이트해요. GitHub 설치에는 Git이 필요하며, Git 허용 옵션은 이 명령에만 적용돼요.
+소스와 배포 압축본은 [HeiTuz/MidjourneyWeb](https://github.com/HeiTuz/MidjourneyWeb)에서 받을 수 있어요. **이번 게시 검증에서는 설치 명령을 실행하지 않았어요.** 사용자 요청으로 설치 검사를 제외했어요. 확인된 기존 설치는 같은 명령에 `--force`를 붙여 업데이트해요. GitHub 설치에는 Git이 필요하며, Git 허용 옵션은 이 명령에만 적용돼요.
 
 ## 어디까지 확인했나요?
 
 스킬 형식과 UI 메타데이터, 설치 대상 선택, 기존 파일 보존, 업데이트, 심링크 이전, 배포 파일 범위와 실행 명령을 검사했어요. 설치 파일 전체와 호스트 어댑터가 정본과 같은지도 대조해요. 배포 압축본의 해제·설치와 현재 사이트의 로그인 후 탐색, 기존 이미지 메뉴, 설정과 여러 기능 패널을 확인했어요.
 
 **새 생성부터 참조 편집, 인앱 파일 저장까지 통과했어요.** V8.2 생성, JPG·PNG 재업로드, 지정한 색상만 바꾸는 편집, 후보 비교를 실행했어요. 최종 선택 결과는 `1024×1024 JPG`와 선택형 PNG로 저장했고, 원본의 형태와 구도가 유지되는지 확인했어요. 부분 마스크 적용과 Undo도 시험했으며, 미디어 브리지로 실제 파일 6개를 저장하고 Node 테스트 20개를 통과했어요.
+
+전체 테스트 20개 통과는 앞선 핵심 흐름 검증 시점의 결과예요. 이번 게시 검증과 CI는 코드 테스트·파일 검사만 실행하며, 설치기 실행이나 로컬 스킬 재설치는 하지 않아요.
 
 **기본은 JPG, 필요하면 PNG예요.** 인앱의 일반 Download Image 이벤트는 여전히 불안정해 검증된 파일 자산 내보내기와 미디어 브리지 경로를 사용해요. 브리지 PNG는 웹 다운로드와 픽셀이 같았고, 웹에서 붙이는 메타데이터만 달랐어요. 피드 오버레이를 눌러 우발적으로 생긴 변형 1회도 승인된 총 4회 예산에 포함했고, 이후에는 정확한 작업 URL로 이동하도록 고쳤어요. HD·업스케일, 마스크·레이어 생성, 다른 참조 역할, 취향 학습, 보드·폴더 변경, Style Creator, 일괄 압축 다운로드와 영상 납품은 미검증이에요.
 
@@ -118,6 +120,8 @@ npx --yes --allow-git=all --package github:HeiTuz/MidjourneyWeb heituz-midjourne
 
 ```sh
 python3 scripts/validate.py
+npm run test:code
+# 선택 사항: 임시 경로 설치 테스트를 포함한 전체 검사
 npm test
 node scripts/verify-install.mjs codex /custom/skills/midjourney-web
 ```

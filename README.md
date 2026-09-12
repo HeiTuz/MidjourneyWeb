@@ -87,13 +87,13 @@ Omit `--target` for directory-based detection. Interactive terminals offer a cho
 
 `--force` replaces only a recognized MidjourneyWeb install and keeps a backup outside the skill discovery tree, under `~/.local/share/heituz/midjourney-web/backups`. It also migrates this project's original source symlink. Unrelated directories, files and symlinks are refused. To uninstall, remove the installed `midjourney-web` directory after preserving anything you added; keep the canonical checkout if you maintain the project. Skill discovery may require a new task.
 
-**GitHub one-line installation, prepared for publication:**
+**GitHub installation command:**
 
 ```sh
 npx --yes --allow-git=all --package github:HeiTuz/MidjourneyWeb heituz-midjourney -- --target codex
 ```
 
-The remote repository has **not been published or verified yet**. Use the local command today. After publication, the same one-liner with `--force` updates the installed skill. The Git allowance applies to that command only; no global npm setting is changed. Git is required for the GitHub route.
+Source and release archives are available at [HeiTuz/MidjourneyWeb](https://github.com/HeiTuz/MidjourneyWeb). This release's installation command has **not been executed as part of publication validation**; installation checks were explicitly excluded. The same command with `--force` updates a recognized install. The Git allowance applies to that command only; no global npm setting is changed. Git is required for this route.
 
 Bring a logged-in Midjourney account with the relevant plan/GPU allowance, the host's supported browser tool, and local file inspection tools. Codex uses the in-app browser by default; Claude Code and Hermes receive their own transport guidance. The package includes instructions, references and a small Node loopback media helper; it does not install a browser controller or private API client. The three installation payloads are tested locally; live browser execution on Claude Code/Hermes and Windows installation are not yet tested.
 
@@ -108,6 +108,8 @@ Bring a logged-in Midjourney account with the relevant plan/GPU allowance, the h
 - New V8.2 creation, JPG/PNG reference upload, targeted color editing, candidate comparison and final in-app file delivery passed. The selected JPG and optional PNG are 1024×1024.
 - A local erase mask and Undo were exercised. The media bridge saved six real comparison/original assets, and the package passed 20 Node tests.
 
+That full-suite result is from the earlier core-workflow checkpoint. Publication validation runs code-only tests and package checks; it does not run the installer or reinstall the local skill. CI follows the same code-only boundary.
+
 **JPG is the default; PNG is ready when needed.** The ordinary in-app Download Image event remains unreliable, so the skill uses the verified asset-export route and optional media bridge. The source bridge PNG matched the website export's decoded pixels; website-added metadata differed. An accidental feed-overlay variation was identified and counted within the approved four-job test budget, motivating direct job-URL navigation. HD/upscale, generated mask/layer edits, other reference roles, preference training, board/folder mutations, Style Creator, batch archives and video delivery remain untested.
 
 Read the [feature evidence matrix](skills/midjourney-web/references/feature-matrix.md), [verification record](skills/midjourney-web/references/evidence.md) and [official source map](skills/midjourney-web/references/sources.md), reviewed on **2026-09-12**. The matrix separates live UI/file checks, documentation-only workflows, plan gates and retired features. Purchases, publishing and destructive actions remain subject to the user's authorization and the host's action rules.
@@ -118,6 +120,8 @@ The skill lives in [`skills/midjourney-web`](skills/midjourney-web/SKILL.md), wi
 
 ```sh
 python3 scripts/validate.py
+npm run test:code
+# Optional full suite, including isolated installation tests:
 npm test
 node scripts/verify-install.mjs codex /custom/skills/midjourney-web
 ```
