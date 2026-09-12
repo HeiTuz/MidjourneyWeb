@@ -45,7 +45,7 @@ If the current host does not expose the required asset capability or the image d
 
 For folder/batch downloads, validate the selected images and count first. Inspect archive extraction/count and representative contents. Editor Save Current Edit may contain transparency and differs from Save Original Generation. Video delivery also requires actual duration and playback verification.
 
-On recovery, keep an earlier unknown download attempt separate from a later successful save. Inspect known destinations and source identities before retrying; filenames may differ, so a missing expected filename alone does not establish non-execution. Deliver absolute file links and matching job/index links, with the true format and any export limitation.
+On recovery, keep an earlier unknown download attempt separate from a later successful save. Inspect known destinations and source identities before retrying; filenames may differ, so a missing expected filename alone does not establish non-execution. Use unique job/index-based names or a new task subdirectory to avoid overwriting unrelated files. Keep original, candidate and selected-final identities separate. Deliver absolute file links and matching job/index links, with the true format and any export limitation.
 
 ## Visibility and account features
 

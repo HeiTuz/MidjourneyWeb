@@ -2,6 +2,8 @@
 
 ## Prepare and submit
 
+For writing or correcting text, use [prompting.md](prompting.md). Before replacing an unrelated Imagine draft, preserve its text and attachment identities in the task record or use a separate creation tab when supported. Do not discard unfinished work just to clear the bar.
+
 Open Create through the sidebar. Check the Imagine bar, active folder, reference thumbnails/roles, Personalization selection and settings. Text belongs in the web Imagine bar without a Discord `/imagine prompt:` prefix. Enter submits; Cmd+Enter can submit while retaining text, so it is not a harmless editing shortcut. Read the final text back before one submit. Use the exact-job protocol in `browser.md`.
 
 Settings include aspect ratio, version, SD/HD, Raw, stylization, weirdness, variety and GPU speed. Video has separate resolution/batch controls. The actual selected UI or job metadata wins over historical defaults. For one-off overrides prefer supported prompt parameters over changing persistent defaults. Explicitly requested default changes should be read back after saving.

@@ -6,6 +6,7 @@ For current review results, execution coverage, plan gates and retired features,
 
 | Area | Official reference |
 |---|---|
+| Prompt wording and feedback | [Prompt Basics](https://docs.midjourney.com/hc/en-us/articles/32023408776205-Prompt-Basics) |
 | Website navigation / Explore / Tasks | [Website Overview](https://docs.midjourney.com/hc/en-us/articles/33329460426765-Website-Overview) |
 | Imagine / uploads / settings / feed | [Creating on Web](https://docs.midjourney.com/hc/en-us/articles/33390732264589-Creating-on-Web) |
 | Version and compatibility | [Version](https://docs.midjourney.com/hc/en-us/articles/32199405667853-Version) |

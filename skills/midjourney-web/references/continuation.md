@@ -20,6 +20,8 @@ Do not infer unseen data. Record unknown fields as unknown. Never put real user 
 
 `prepared → submitted → running → generated → reviewed → downloaded → verified`
 
+These are observation labels, not requirements to poll every intermediate state. A fast job may already be generated at the first read-back. `reviewed` does not imply the brief passed: record visual acceptance separately from file verification. For a camera edit, include the checks in [camera-edits.md](camera-edits.md).
+
 `submission_unknown` and `failed` are separate states. A lost browser call can be submission_unknown; it is not proof that no job exists. A successfully decoded original file establishes the last state only when it corresponds to the chosen result. Downloading the wrong index is not delivery success.
 
 On resume, inspect the recorded job first and reconcile the live feed before any resubmission. Check parent/source identity, model and selected reference codes against the saved request. If the user changes direction, preserve old outputs and record the new request separately. If they stop, leave the current job status and remaining work; do not promise future polling unless a real scheduler was requested and registered.

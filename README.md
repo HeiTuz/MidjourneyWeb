@@ -20,6 +20,7 @@ MidjourneyWeb is a **browser-first agent skill** built around the way creative w
 |---|---|
 | **“Make this idea real.”** | Prompts, image references, aspect ratios, Raw, SD/HD and generation settings |
 | **“Same character. A different scene.”** | V8.x Edit Model references, with version-aware routing for older models |
+| **“Show this scene from behind.”** | Viewpoint instructions, original-based comparison and checks for subject rotation versus camera movement |
 | **“Keep the face. Change the background.”** | Regional edits, applied-mask checks, layers and preservation review |
 | **“Find my next visual obsession.”** | Explore, Style Explorer, reusable style codes and Style Creator |
 | **“Give the whole series this feeling.”** | Personalization profiles, Moodboards and consistent reference selection |
@@ -29,6 +30,8 @@ MidjourneyWeb is a **browser-first agent skill** built around the way creative w
 | **“Send me the original.”** | Full-resolution JPG by default, optional PNG, and verified local delivery |
 
 These are the workflows the skill teaches. See [what has been verified](#what-has-been-verified) for the current testing scope.
+
+Prompt-only requests end with copyable wording without requiring an account session. Website execution preserves unrelated drafts and distinguishes prepared attachments, submitted jobs, visual acceptance and verified files.
 
 ## Creative control, down to the details
 
@@ -93,11 +96,13 @@ Omit `--target` for directory-based detection. Interactive terminals offer a cho
 npx --yes --allow-git=all --package github:HeiTuz/MidjourneyWeb heituz-midjourney -- --target codex
 ```
 
-Source and release archives are available at [HeiTuz/MidjourneyWeb](https://github.com/HeiTuz/MidjourneyWeb). This release's installation command has **not been executed as part of publication validation**; installation checks were explicitly excluded. The same command with `--force` updates a recognized install. The Git allowance applies to that command only; no global npm setting is changed. Git is required for this route.
+Source and release archives are available at [HeiTuz/MidjourneyWeb](https://github.com/HeiTuz/MidjourneyWeb). Remote installation is separate from local package validation; see [the evidence record](skills/midjourney-web/references/evidence.md) for tested routes. The same command with `--force` updates a recognized install. The Git allowance applies to that command only; no global npm setting is changed. Git is required for this route.
 
 Bring a logged-in Midjourney account with the relevant plan/GPU allowance, the host's supported browser tool, and local file inspection tools. Codex uses the in-app browser by default; Claude Code and Hermes receive their own transport guidance. The package includes instructions, references and a small Node loopback media helper; it does not install a browser controller or private API client. The three installation payloads are tested locally; live browser execution on Claude Code/Hermes and Windows installation are not yet tested.
 
 ## What has been verified
+
+On 2026-09-13, one camera-direction Edit batch produced four saved 1456×816 JPGs. Rear views improved, while coherent whole-scene camera orbit remained unproven. The full Editor's Smart Select, erase, Undo and selection cleanup were exercised on the same source; full Editor generation was not. See [camera edit guidance](skills/midjourney-web/references/camera-edits.md) and the dated evidence entries.
 
 **From a prompt to a real file, tested in the in-app browser.**
 

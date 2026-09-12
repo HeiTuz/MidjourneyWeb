@@ -4,6 +4,24 @@ Reviewed 2026-09-12. Private job IDs, account data, prompt bodies, images and lo
 
 ## Verified core workflow
 
+The core checkpoint below is from 2026-09-12. A separate 2026-09-13 maintenance experiment is recorded next; it does not change the earlier four-job accounting.
+
+## Viewpoint and full Editor experiment — 2026-09-13
+
+One authorized Imagine-bar Edit batch used a previously selected painted photographer/window scene as its single uploaded original. The instruction requested a rear three-quarter over-the-shoulder viewpoint while retaining pose, scene and style, with explicit V8.2, 16:9, Raw and stylize 200 parameters. Four candidates completed and were visually compared; source and all four full-resolution JPGs were saved and decoded at 1456×816.
+
+All candidates showed more of the back of the head/jacket. Palette and brushwork remained broadly consistent. Window/crowd layout largely stayed anchored; one candidate exposed more of the window but no candidate established a coherent orbit of the entire scene. This is a partial viewpoint result, not a validated 3D camera move or identity guarantee. The rear-facing head limits facial-identity assessment. There was no controlled profile/style comparison or repeat batch.
+
+The full sidebar Editor loaded the same original independently. Move/Resize controls, aspect presets and the active layer were inspected. Smart Select isolated the face, not the entire person; Erase Selection produced visible checkerboard, Undo restored the pixels, and Clear all points removed the remaining selection overlay. No Editor generation, layer composition, outpainting or export was submitted. The original was restored visibly.
+
+In the narrow gallery lightbox, Toggle Info exposed the action panel. A scroll over the picture advanced the candidate; the recorded source URL restored the correct image. Quick Edit closed the lightbox but did not leave an attachment in the inspected bar, so it was not treated as success. Uploading the previously saved exact original established the Edit attachment. No extra GPU job was submitted for this recovery.
+
+Official Prompt Basics, Creating on Web, Version, Edit Model and Editor articles were rechecked. [Camera edit guidance](camera-edits.md) separates semantic viewpoint changes, layer transforms and canvas expansion. Private prompt, job IDs, hashes and files remain outside the package.
+
+Maintenance validation on 2026-09-13: package/reference validation, skill quick validation, diff whitespace checks and all 21 existing Node tests passed, including isolated packed installation and host payload parity. No installer or bridge code changed. These checks validate the package, not additional live website features.
+
+## Earlier core checkpoint
+
 The bounded live budget was four GPU jobs. All four were identified: initial creation, an unintended variation triggered by a feed overlay, a PNG-reference edit, and a separate edit using a JPG downloaded entirely through the in-app browser. No extra jobs, purchases, preference training or public-sharing actions were submitted.
 
 | Step | Actual evidence |

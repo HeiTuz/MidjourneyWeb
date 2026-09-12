@@ -6,6 +6,8 @@ Open the intended image index, expand Animate Image, and distinguish automatic/l
 
 Low Motion and High Motion trade stability for more movement; judge actual output rather than promising preservation. Loop uses matching start/end imagery. Extend Auto/Manual continues a selected video; manual allows a changed motion prompt. Bind each extension to its parent and verify resulting duration, seams and subject continuity. Read current allowed extension count and duration rather than hard-coding an old five-second assumption.
 
+For a camera-motion request, distinguish changing the still viewpoint with [Edit](camera-edits.md) from animating continuous camera travel. Describe one clear motion and the subject's intended movement or stillness; avoid simultaneously asking for several incompatible camera moves. Compare first/last frames and intermediate motion for scene drift, rather than treating a good start frame as proof that the video passed.
+
 Wait for the specific job's playable result, compare the requested variants and download the actual selected video. Video presence alone isn't completion: verify the media loads and plays, then check local format/duration. Use the website's displayed download formats; don't derive an MP4 URL from a guessed naming pattern.
 
 Source: [Video](https://docs.midjourney.com/hc/en-us/articles/37460773864589-Video), [Parameter List](https://docs.midjourney.com/hc/en-us/articles/32859204029709-Parameter-List). Plan, speed and HD availability must be checked live.

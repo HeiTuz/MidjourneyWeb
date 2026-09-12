@@ -17,13 +17,21 @@ Use [Modifying Your Creations](https://docs.midjourney.com/hc/en-us/articles/333
 
 ## Edit Model versus Editor
 
+For camera direction changes, see [camera-edits.md](camera-edits.md). Choose semantic Edit for a new viewpoint; use Editor for spatial masks, composition and canvas work. Moving or rotating a flat layer alone does not reconstruct a new camera angle.
+
 [Edit Model](https://docs.midjourney.com/hc/en-us/articles/48495453462797-Edit-Model) supports written modification instructions and up to four references in V8.1/8.2. It can combine with Image Prompts, Style References, Moodboards/Personalization and HD. It is not compatible with tile, and Edit Model results currently do not support Remix. Use explicit 'change X, preserve Y' instructions when editing. Quick Edit can be useful for semantic changes; the masked Editor is preferable when the region is exact.
 
 ## Editor procedure
 
+The gallery's light Editor and the sidebar's full Edit page are different surfaces. Use the full page for uploaded images, layers and export controls. Preserve any existing draft; open a separate tab for an independent experiment rather than resetting the user's canvas.
+
+Choose mask scope deliberately. For a local change, erase only the target region. For a V8.x whole-image style change, the official Editor walkthrough permits submitting instructions with no erase/selection; an unmasked submission is not necessarily a no-op. This can be explored for global semantic changes such as viewpoint, but do not report viewpoint generation in full Editor as tested merely because the same instruction worked with an Imagine-bar Edit reference. Inspect active layer, mask, version and resulting job separately.
+
 Open the source in Editor or use Edit from URL / Edit Uploaded Image. Inspect source, active layer, canvas boundaries and prompt. Use Move/Resize to place and scale; Paint to erase/restore; Select for Smart Select. Green selection is not an applied erase mask: apply Erase Selection or Erase Background, then verify checkerboard only in the intended region. Undo/Restore repairs a wrong mask before submitting. A broad canvas-wide drag is never an acceptable substitute for a small region.
 
 Add/reorder layers with the Layers controls and verify the active layer. Submit only after checking visible protected content and transparency. Results must be inspected for both requested edits and preservation. Retexture is integrated in the V8.x Edit Model; the separate legacy Retexture tab requires a compatible older version. Distinguish Save Original Generation from Save Current Edit (which can export transparency).
+
+Smart Select may isolate a face rather than the whole person. Inspect hair, hands, clothing and held objects before using Erase Background; add Include/Exclude points as needed. After Undo, selection points or green highlighting may remain even though pixels are restored. Clear selection points separately and visually check the restored canvas before the next operation.
 
 Gallery and visibility are version-dependent. The Editor article's **Image History & Visibility** section says V8.x Edit Model results populate Create/Organize automatically, including external-image edits, and follow Stealth visibility. V7 and earlier require Upscale to Gallery; their external-image/layer outputs have different visibility rules. The article also retains an earlier unqualified note saying uploads/layers require upscaling: do not apply that note to V8.x or spend GPU just to make a supposedly missing result appear. Check the selected model, Editor results, and exact job in the gallery first. Do not assume an uploaded-image edit is private. If the user's scope excludes public output and current visibility is public, resolve that before submission.
 

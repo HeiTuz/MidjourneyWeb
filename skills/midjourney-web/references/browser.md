@@ -4,7 +4,7 @@ Use the currently supplied computer/browser tool contract. This skill supplies M
 
 ## Entry and inspection
 
-- Reuse a bound, live Midjourney tab. Otherwise inventory tabs with `cua.getState()` or `cua.listTabs` according to first-call rules, then select the observed tab/browser IDs. If there is none, `cua.createBrowserTab("iab", "https://www.midjourney.com", {visible:true})` is the tested first-call shape for a user-visible login. Follow current documentation if this changes.
+- Follow current first-call routing before reusing or opening a tab. A supplied tab mention/ID or explicitly named browser takes precedence over general inventory. For an unspecified existing surface, inventory with `cua.getState()` and select observed tab/browser IDs. If none exists, `cua.createBrowserTab("iab", "https://www.midjourney.com", {visible:true})` is the tested entry for a user-visible login. Use other inventory APIs only when documented by the current tool.
 - An empty current-task tab list does not mean authentication was lost. If the earlier tab is unavailable, open the recorded job URL in the same in-app browser and inspect it before requesting another login. This recovered an authenticated page in the maintenance test. A tab owned by another active task must not be seized through a different automation surface.
 - After each action, obtain fresh AX state. Numeric indices are ephemeral. Many sidebar links and settings buttons have no accessible name. A URL in the current tree can identify navigation; a screenshot can identify an unlabeled icon. Never paste stored coordinates into a new viewport.
 - Where AX omits selected states, inspect the screenshot or a supported read-only DOM view. Labels such as `Selected Select` can contain both action labels; they do not prove selection. Scope duplicate `Subtle`, `Standard`, `HD`, and `Low Motion` controls to the correct section.
@@ -13,7 +13,7 @@ Use the currently supplied computer/browser tool contract. This skill supplies M
 
 ## Login and recovery
 
-Normal sequence: Log In → Continue with Google → user's established Google account → return to an authenticated page. Let the user supply credentials or interactive verification when needed; do not ask them to paste passwords into chat. An account creation/consent screen is distinct from ordinary existing-account login.
+Reuse an authenticated page first. If sign-in is needed, use the established method offered by the actual screen. The earlier test used Continue with Google; that is evidence for that account, not a universal requirement. Ask which account to use only if the identity remains ambiguous. Let the user supply credentials or interactive verification when needed; do not ask them to paste passwords into chat. An account creation/consent screen is distinct from ordinary existing-account login.
 
 Observed on 2026-09-12: `auth/network-request-failed` occurred before the Google chooser; the user refreshed, then reported successful login. Later authenticated Create data was observed. This establishes a recovery, not a root cause or universal fix.
 
@@ -28,6 +28,8 @@ Record both the user's candidate number and the site's literal index (for exampl
 The URL alone can be insufficient: in a live recovery test a lightbox URL ending in `index=0` displayed media for a different candidate, and Download Image requested that displayed candidate's PNG. The intended source was later found in Trash. Check its trash state without changing it unless restoration is authorized or corrects your own accidental action. Do not label the neighboring candidate as the requested index or silently rewrite its URL.
 
 Carousels can retain offscreen candidates and duplicate action buttons that Playwright still calls visible. Inspect bounding rectangles to select the button inside the viewport and the matching picture; `visible:true`, `.first()` and global button counts alone are insufficient. Read back the resulting exact media/job before acting. The desktop layout may call the result menu Options and expose Download Image directly, while a narrow layout calls it Open Options. Use current DOM labels rather than assuming one layout's names.
+
+In a narrow lightbox, Toggle Info can expand the action panel. Scrolling over the image may move to a neighboring candidate rather than scroll the controls. Expand the panel first and verify the current index again. Quick Edit should produce an actual Edit attachment; lightbox closure alone is not success. If the bar remains empty, inspect Add Images and use the verified selected original upload route instead of assuming a reference was applied.
 
 Wait on that job's running/queued status and actual result media. A global `Vary` button, four old CDN images, or `Submitted!` is insufficient. Loaded image elements must have decoded dimensions or an equivalent visual confirmation; a video element needs playable media, not merely a tag. Recheck the requested output count. Use bounded state/event waits, not fixed guesses such as '15 seconds always means finished'. On timeout retain the job identity and current state, then resume the same job later.
 

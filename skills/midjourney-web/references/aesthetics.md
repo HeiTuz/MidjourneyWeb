@@ -2,6 +2,8 @@
 
 ## Explore / Style Explorer
 
+For a style-search deliverable, return the requested shortlist with observed code/link and concrete visual differences. Stop at browsing/copying unless generation or taste changes were requested. Do not turn a style search into a training session. When correcting a style mismatch, consult [prompting.md](prompting.md) before stacking more references.
+
 Use Images, Videos or Styles explicitly. Sort/search using visible controls; open a candidate to compare examples before adopting its style. Style Explorer's Copy/use action prepares a code, while **Try Style immediately generates using the current/latest prompt**. Do not click Try Style during a read-only search. Inspect the resulting `--sref` and avoid unintended stacked codes. A style like is distinct from training the personal profile. Source: [Style Reference](https://docs.midjourney.com/hc/en-us/articles/32180011136653-Style-Reference).
 
 Browse creator profiles, Follow, search similar images, likes and personal archive when requested. Public community examples are inspirations, not the user's own generated jobs. Tasks offers ranking/surveys; do not invent the user's aesthetic choices or answer personal surveys automatically. Source: [Website Overview](https://docs.midjourney.com/hc/en-us/articles/33329460426765-Website-Overview), [Profiles](https://docs.midjourney.com/hc/en-us/articles/41117938447629-Profiles).
