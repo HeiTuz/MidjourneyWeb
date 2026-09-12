@@ -77,7 +77,8 @@ function checkDestination(destination, home, sourceRoot, env) {
 
 export function payloadFiles(sourceRoot, host) {
   const skill = path.join(sourceRoot, 'skills', name);
-  const files = [{ from: path.join(skill, 'SKILL.md'), to: 'SKILL.md' }, { from: path.join(sourceRoot, 'LICENSE'), to: 'LICENSE' }];
+  const files = [{ from: path.join(skill, 'SKILL.md'), to: 'SKILL.md' }, { from: path.join(sourceRoot, 'LICENSE'), to: 'LICENSE' },
+    { from: path.join(skill, 'scripts', 'media-bridge.mjs'), to: 'scripts/media-bridge.mjs' }];
   if (host === 'codex') files.push({ from: path.join(skill, 'agents', 'openai.yaml'), to: 'agents/openai.yaml' });
   for (const entry of fs.readdirSync(path.join(skill, 'references'), { withFileTypes: true })) {
     if (entry.name.startsWith('.') || entry.name.endsWith('.local.md') || !entry.name.endsWith('.md') || entry.name === 'host.md') continue;

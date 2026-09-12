@@ -16,13 +16,14 @@
     "hosts/*.md",
     "skills/midjourney-web/SKILL.md",
     "skills/midjourney-web/agents/openai.yaml",
+    "skills/midjourney-web/scripts/media-bridge.mjs",
     "skills/midjourney-web/references/*.md",
     "!**/*.local.md",
     "!**/*.bak*",
     "!**/.*"
   ],
   "scripts": {
-    "test": "node --test tests/install.test.mjs",
+    "test": "node --test tests/*.test.mjs",
     "validate": "python3 scripts/validate.py"
   },
   "engines": { "node": ">=18" }

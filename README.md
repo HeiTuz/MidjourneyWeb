@@ -26,7 +26,7 @@ MidjourneyWeb is a **browser-first agent skill** built around the way creative w
 | **“Show me the strongest take.”** | Candidate comparison, variations, upscaling and HD workflows |
 | **“Get this project organized.”** | Search, filters, folders, saved searches and batch actions |
 | **“Bring it to life.”** | Image-to-video, motion choices, loops and extensions |
-| **“Send me the original.”** | Download procedures and local file verification |
+| **“Send me the original.”** | Full-resolution JPG by default, optional PNG, and verified local delivery |
 
 These are the workflows the skill teaches. See [what has been verified](#what-has-been-verified) for the current testing scope.
 
@@ -41,6 +41,8 @@ These are the workflows the skill teaches. See [what has been verified](#what-ha
 **The model matters.** V8.x Edit Model, V7 Omni Reference and older Character Reference workflows get their own paths. The skill consults current official documentation when capabilities change.
 
 **The original is the deliverable.** Downloads are checked as actual files. Screenshots serve as review evidence; original media gets its own verification.
+
+**Bring the file home, inside the app.** JPG delivery uses the selected loaded image. When PNG's download event stalls, the included media bridge renders the site's observed original URL locally so the in-app browser can export it. No image conversion or exported login credentials.
 
 **Stay in the creative workspace.** The in-app browser is the default. Chrome remains available when you choose it or a specific obstacle calls for it.
 
@@ -93,18 +95,20 @@ npx --yes --allow-git=all --package github:HeiTuz/MidjourneyWeb heituz-midjourne
 
 The remote repository has **not been published or verified yet**. Use the local command today. After publication, the same one-liner with `--force` updates the installed skill. The Git allowance applies to that command only; no global npm setting is changed. Git is required for the GitHub route.
 
-Bring a logged-in Midjourney account with the relevant plan/GPU allowance, the host's supported browser tool, and local file inspection tools. Codex uses the in-app browser by default; Claude Code and Hermes receive their own transport guidance. This package installs instructions and references, not a browser controller, database server or API client. The three installation payloads are tested locally; live browser execution on Claude Code/Hermes and Windows installation are not yet tested.
+Bring a logged-in Midjourney account with the relevant plan/GPU allowance, the host's supported browser tool, and local file inspection tools. Codex uses the in-app browser by default; Claude Code and Hermes receive their own transport guidance. The package includes instructions, references and a small Node loopback media helper; it does not install a browser controller or private API client. The three installation payloads are tested locally; live browser execution on Claude Code/Hermes and Windows installation are not yet tested.
 
 ## What has been verified
 
-**A working package, with a clearly documented test boundary.**
+**From a prompt to a real file, tested in the in-app browser.**
 
 - Skill-format and UI metadata checks passed.
 - Installer tests cover host selection, safe replacement, symlink migration, payload boundaries, npm-style binary execution and complete canonical/host-adapter parity.
 - The distribution archive was extracted, checked and installed successfully.
 - Authenticated website navigation, existing image actions, settings and several feature panels were inspected live.
+- New V8.2 creation, JPG/PNG reference upload, targeted color editing, candidate comparison and final in-app file delivery passed. The selected JPG and optional PNG are 1024×1024.
+- A local erase mask and Undo were exercised. The media bridge saved six real comparison/original assets, and the package passed 19 Node tests.
 
-**The live release gate is still open.** New paid creation and uploaded-reference editing have not passed end to end. The earlier original-download event timeout remains unknown. A subsequent in-app recovery saved and visually checked an existing result's full-resolution 1456×816 JPEG through the supported page-assets API. That is verified file recovery, not proof of the original download button: a lightbox URL/media-index mismatch also occurred and is now covered by the recovery instructions. Feature coverage is broader than live execution coverage.
+**JPG is the default; PNG is ready when needed.** The ordinary in-app Download Image event remains unreliable, so the skill uses the verified asset-export route and optional media bridge. The source bridge PNG matched the website export's decoded pixels; website-added metadata differed. An accidental feed-overlay variation was identified and counted within the approved four-job test budget, motivating direct job-URL navigation. HD/upscale, generated mask/layer edits, other reference roles, preference training, board/folder mutations, Style Creator, batch archives and video delivery remain untested.
 
 Read the [feature evidence matrix](skills/midjourney-web/references/feature-matrix.md), [verification record](skills/midjourney-web/references/evidence.md) and [official source map](skills/midjourney-web/references/sources.md), reviewed on **2026-09-12**. The matrix separates live UI/file checks, documentation-only workflows, plan gates and retired features. Purchases, publishing and destructive actions remain subject to the user's authorization and the host's action rules.
 

@@ -1,56 +1,55 @@
 # Evidence and coverage
 
-Review date: 2026-09-12. No account identifiers, job IDs, source images, browsing transcripts or private prompt bodies are distributed here.
+Reviewed 2026-09-12. Private job IDs, account data, prompt bodies, images and logs are excluded from this repository. See the [feature matrix](feature-matrix.md) for per-feature status and official links.
 
-## Basis
+## Verified core workflow
 
-- Historical evidence: existing Computer History summaries and three narrowly selected Chrome event segments from that date. The status tool was unavailable, so capture health/completeness was not verified. These records are retrospective evidence only.
-- Historical workflows observed: Explore/Create browsing; reference-bearing prompts with aspect/Raw/stylize/profile controls; image detail actions; animation submission followed by progress; personalization/moodboard use described in saved summaries. Menu presence or a submit toast did not establish export completion.
-- Current in-app browser: user completed Google login after a refresh. The agent subsequently observed their existing creation feed and an existing image's detailed actions.
-- Official documentation: the sources index, including the V8.2/Edit Model transition. The skill is newly authored; third-party automation examples were assessed earlier but not incorporated as executable code.
+The bounded live budget was four GPU jobs. All four were identified: initial creation, an unintended variation triggered by a feed overlay, a PNG-reference edit, and a separate edit using a JPG downloaded entirely through the in-app browser. No extra jobs, purchases, preference training or public-sharing actions were submitted.
 
-## Current verification scope
-
-The compact [feature matrix](feature-matrix.md) maps official current rules to execution evidence and plan/legacy boundaries. It is the release coverage index, not a claim that all features were executed.
-
-| Surface | Evidence level |
+| Step | Actual evidence |
 |---|---|
-| Google login | User-completed; authenticated feed later observed; agent did not enter credentials |
-| Create and existing image detail | Live navigation and action labels verified |
-| Settings | Live panel and screenshot; version 8.2 and selected controls visible; no defaults changed |
-| Moodboards | Live real collection loaded; duplicate board names observed, motivating ID-based selection |
-| Editor | Live empty editor: Move/Paint/Select, Erase/Restore, Layers, URL/upload entry and export/submit controls |
-| Organize | Live filter controls observed; no batch mutation performed |
-| Personalize / Style Creator / Tasks | Navigation and controls inspected; no training, profile creation or style session started |
-| New generation / paid modifications / upload | Procedures documented; no new GPU jobs or source uploads performed |
-| Original download | Existing image's Download Image invoked; the subscribed browser download event timed out after 15 seconds and no saved-file evidence was established. Outcome unverified; not a passed export test |
+| Authentication and settings | Existing in-app authentication reused after opening the recorded job in a new task; current V8.2/SD, aspect, Raw, stylization and speed controls inspected without changing defaults |
+| Creation | One V8.2 SD square product-image job produced four images; selected job/index matched the visible full-resolution media |
+| Original file | Selected 1024×1024 JPG saved through in-app pageAssets; original PNG also saved through the new loopback media bridge |
+| Reference upload | Both PNG and JPG files uploaded through the documented filechooser API; screenshot confirmed one matching image in Attach to prompt (Edit Model) |
+| Targeted edit | Reference-bearing child jobs completed. A red sphere became lemon yellow while the blue mug, right handle, placement, framing, lighting and background remained visually consistent |
+| Selection and delivery | All four final candidates inspected and decoded at 1024×1024; index 0 selected and saved as JPG, with optional original PNG |
+| Preservation review | Independent read-only visual/quantitative review preferred index 0. Outside a stated sphere mask, mean absolute RGB difference was about 3.13/255 per channel; this is preservation evidence, not a pixel-identity claim |
+| PNG transport fidelity | In-app bridge PNG and the same source downloaded through Chrome had identical decoded RGB pixels. File bytes differed because the website download added creation/author/description metadata |
 
-The intended coverage is the website's image workflow and associated style/library/account navigation, plus its image-to-video branch. This is not a claim of end-to-end testing of every feature. Subscription changes, permanent deletion, publishing and preference training were not exercised. A future release must keep these distinctions accurate.
+**Default delivery is JPG** at the actual full source resolution, copied without re-encoding. PNG is optional when requested or useful. This format choice was explicitly requested during testing.
 
-Initial validation passed the host skill-format validator, package/reference checks, UI metadata parsing and five Python installer/package tests. That original symlink installer has since been replaced by the Node installer with host selection, runtime copies, backups and isolated tests. Use current test output for the current count. Independent behavioral evaluation was attempted but the provider could not accept the delegated task; no independent-review pass is claimed. The author reviewed the scenarios below against the written procedures.
+## Download findings and recovery
 
-The subsequent Node installer pass on the same date passed 14 tests, including replacement rollback, all three host payloads, local-data exclusion and execution of the actual npm-packed binary in offline mode. The installed copy remained readable after removal of the test source and npm cache. These are local package tests, not a verified public GitHub install or remote CI run.
+- The earlier Download Image event timeout remains historically unknown. No original success was inferred from it. A later full-resolution JPEG recovery was verified separately.
+- Feed-card clicks can hit newly revealed mutation controls. A variation was accidentally submitted and counted against the four-job budget. An unintended trash state on the older source was restored and read back; no original was left trashed. Exact observed job URLs replaced feed clicks for further navigation.
+- A narrow carousel could display a neighboring candidate while the URL retained the old index, with offscreen action buttons still considered visible. The intended source was found in Trash. Media identity, viewport position and trash state were added to recovery checks.
+- The ordinary in-app Download Image button did not return a usable download event in narrow or desktop layouts. A PNG fetch response or a void downloadMedia return did not establish a file. Direct unauthenticated transfer encountered a CDN challenge; no cookies were exported.
+- Full-resolution loaded JPGs exported successfully through pageAssets. Prefetched candidates needed to be loaded or rendered in the bridge before export.
+- **Working in-app PNG recovery:** obtain the exact PNG URL from the actual Download Image action, render it as an image in the loopback media bridge, wait for decoded dimensions, then use the host's pageAssets inventory/bundle. This saved original PNGs successfully without Chrome, credential extraction, private endpoints, security changes or image conversion.
+- The actual canonical bridge CLI was tested live with six assets: three original PNGs and three comparison JPGs. All six loaded at 1024×1024 and were saved successfully.
+- The ordinary download button itself is not claimed fixed; the skill now has a verified in-app file-delivery route.
 
-## Follow-up maintenance pass
+## Additional live coverage
 
-- Started from a clean working tree at the known local installer commit. The runtime installation was confirmed to be a directory copy, not a symlink.
-- Reopened the prior exact job in the same in-app browser when the current task had no tabs. Existing authentication persisted; no new login was needed. A Chrome tab owned by another active task was left alone.
-- Reconciled the old download as far as current evidence permits: no matching file was found in the known Downloads destination. That does not establish non-execution. The earlier event timeout remains unknown.
-- Used the currently documented `pageAssets.list/bundle` capability to save the previously observed result's full-resolution JPEG, then decoded and visually inspected it: 1456×816, JPEG. This verifies displayed-media recovery, not the Download Image original export. Refreshing inventory after a UI change resolved a stale-inventory error.
-- Observed a real identity hazard: the selected lightbox URL retained one index while a neighboring candidate's JPEG was visible. A Download Image click exposed a PNG request for that neighboring candidate. Reselecting the original feed link and refreshing did not establish a matching original download. No wrong-index file was accepted as the requested original. Copy Image URL also returned no usable clipboard text in this host.
-- Revisited Explore → Styles and a style detail; Try Style explicitly indicated immediate submission of the current/latest prompt. Inspected current Organize media/type/resolution/aspect/version/profile/saved-search controls. No likes, taste rankings, public visibility or account changes were performed.
-- Rechecked official Create, Version, Edit Model, Editor, Image Prompts, Style Reference, Describe, Variations, Upscalers, Overview, Personalization, Moodboards, Style Creator, Organize, Folders, Plans, Video and Legacy articles. Corrected version-specific Editor gallery/visibility behavior and documented the conflicting older note.
-- Package validator, host quick validator and 16 Node tests passed, including complete installed-payload/adapter comparisons, stale-file and manifest detection, and the real packed npm CLI in an isolated destination. This remains local validation, not remote CI.
+Explore → Styles and style-detail controls were inspected; Try Style explicitly submits the current/latest prompt. Current Organize filters, profiles and saved-search controls were inspected. A local erase mask was applied only inside the test sphere, visibly became checkerboard, and Undo restored the source; no masked generation was submitted. Earlier same-day inspection covered Moodboards, empty full Editor/layers, Personalize, Style Creator and Tasks.
 
-**Remaining core gate:** no explicit GPU budget was found in the available request/history; a bounded-budget question was sent and remained unanswered during this pass. No new GPU job was submitted. New creation → original download and original re-upload → targeted edit → selected original file therefore remain untested. Live release readiness is not achieved. Profile training, Style Creator rounds, video generation, folder mutations and batch exports also remain untested. Private recovery files and job identifiers are kept outside the distributable repository.
+Describe execution, HD/upscale, generated masked/layer edits, other reference roles, profile training, board/folder mutations, Style Creator rounds, batch archives and new video generation remain untested. Video history or menu presence is not a completed video test. Plan-gated and retired features are labeled separately in the matrix.
 
-## Behavioral review scenarios
+## Package verification
 
-Use these for independent read-only evaluation, not as brittle phrase-matching tests:
+Package/reference validation, the host skill validator and 19 Node tests passed. Tests cover the installer, safe replacement and rollback, all three host adapters, actual packed npm CLI execution, complete canonical/payload parity, and the media bridge's URL validation, loopback CLI and bounded HTTP surface. Final distribution and installation receipts are kept outside the repository.
 
-1. The feed already contains many completed images. A new request times out after submit. Identify the next action and completion evidence.
-2. Several moodboards have the same display name. Continue the style of a prior job without guessing the board or changing global defaults.
-3. A V8.2 job needs a different background while preserving the subject. Select a compatible edit route and explain mask verification.
-4. A user asks only to browse styles. Distinguish Copy from Try Style and avoid accidental generation.
-5. A download button was clicked but no path is returned. Explain the remaining verification, without pretending a screenshot is the original.
-6. Google login fails before account selection. Preserve unsaved content and use proportionate recovery before abandoning the chosen browser.
+The Codex installation is a runtime copy containing the canonical references, bridge script and Codex host adapter. Claude/Hermes payloads are locally tested; their live browser workflows and Windows installation are not. Local artifact checks do not imply remote GitHub CI or publication. No remote, release tag or version bump was created.
+
+Official Create, Version, Edit Model, Editor, Image Prompts, Style Reference, Describe, Variations, Upscalers, Overview, Personalization, Moodboards, Style Creator, Organize, Folders, Plans, Video and Legacy articles were rechecked. The Editor's older generic gallery note conflicts with its version-specific visibility section; the skill now follows the version-specific rule and actual job state.
+
+## Behavioral regression scenarios
+
+1. Submit times out in a feed full of older images: reconcile the exact new job before another GPU submission.
+2. A feed link exposes hover buttons or a carousel has offscreen actions: navigate by observed job URL and verify the current image, not the first button.
+3. Duplicate moodboard names or evolving profiles: use the resolved prior job code and exact board identity.
+4. V8.x background edit: verify the mask and current visibility, without applying legacy gallery rules.
+5. Style browsing: separate Copy/preparation from Try Style and taste training.
+6. Download event has no file: use the supported loaded-asset route; default JPG, optional observed PNG through the bridge.
+7. Current-task tabs are empty: reopen the recorded job in the same browser before asking for new authentication.
