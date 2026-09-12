@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.DS_Store
+.env
+.env.*
+sessions/
+downloads/
+screenshots/
+artifacts/
+dist/
+*.db
+*.sqlite*

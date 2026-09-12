@@ -1,0 +1,6 @@
+interface:
+  display_name: "Midjourney Web"
+  short_description: "인앱 브라우저로 미드저니 생성·편집·스타일·정리·다운로드 실행"
+  default_prompt: "$midjourney-web으로 현재 로그인된 미드저니 작업을 이어서 진행해줘."
+policy:
+  allow_implicit_invocation: true
