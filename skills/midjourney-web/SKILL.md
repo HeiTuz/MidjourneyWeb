@@ -26,6 +26,7 @@ description: 미드저니 웹사이트에서 이미지 생성·편집·레퍼런
 | 로그인·로딩·중복 제출·버튼 오인 문제 | [브라우저 실행](references/browser.md) |
 | 기능 지원, 공식 출처, 사이트 변경 대응 | [공식 문서 목록](references/sources.md) |
 | 이 스킬의 관측 근거와 검증 범위 | [검증 기록](references/evidence.md) |
+| 기능별 실테스트·문서 확인·플랜 제한·지원 종료 구분 | [기능 검증표](references/feature-matrix.md) |
 | 오래 걸리는 생성·여러 장 납품·중단 후 재개 | [작업 기록과 재개](references/continuation.md) |
 
 ## 결과를 식별하는 기준

@@ -6,6 +6,7 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { install, parseArgs, plan, payloadFiles } from '../scripts/install.mjs';
+import { verifyInstall } from '../scripts/verify-install.mjs';
 
 const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 function fixture(t) {
@@ -164,8 +165,37 @@ test('packed npm payload excludes local data and runs offline from its binary', 
   const archive = path.join(f.dir, packed.filename);
   const output = execFileSync('npm', ['exec', '--offline', '--yes', '--cache', cache, '--package', archive, '--', 'heituz-midjourney', '--target', 'codex', '--dest', f.dest], { cwd: f.home, encoding: 'utf8', timeout: 30000 });
   assert.match(output, /"host":"codex"/);
+  assert.deepEqual(verifyInstall(f.source, f.dest, 'codex'), []);
   fs.rmSync(f.source, { recursive: true });
   fs.rmSync(cache, { recursive: true });
   assert.match(fs.readFileSync(path.join(f.dest, 'SKILL.md'), 'utf8'), /name: midjourney-web/);
   assert.ok(fs.existsSync(path.join(f.dest, 'references', 'host.md')));
+});
+
+test('verification catches stale payloads, wrong adapters and untracked installed data', t => {
+  const f = fixture(t);
+  for (const host of ['codex', 'claude', 'hermes']) {
+    const destination = path.join(f.home, host + '-verified');
+    install([{ host, destination }], f.options);
+    assert.deepEqual(verifyInstall(f.source, destination, host), []);
+  }
+  install([{ host: 'codex', destination: f.dest }], f.options);
+  fs.appendFileSync(path.join(f.dest, 'SKILL.md'), '\nlocal change\n');
+  fs.copyFileSync(path.join(f.source, 'hosts', 'hermes.md'), path.join(f.dest, 'references', 'host.md'));
+  fs.writeFileSync(path.join(f.dest, 'private.log'), 'not a payload');
+  const errors = verifyInstall(f.source, f.dest, 'codex');
+  assert.ok(errors.includes('Content differs: SKILL.md'));
+  assert.ok(errors.includes('Content differs: references/host.md'));
+  assert.ok(errors.includes('Unexpected installed file: private.log'));
+});
+
+test('verification compares the manifest with canonical bytes, not only the installed file', t => {
+  const f = fixture(t);
+  install([{ host: 'codex', destination: f.dest }], f.options);
+  const manifestPath = path.join(f.dest, '.midjourney-install.json');
+  const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+  manifest.hashes['SKILL.md'] = 'stale';
+  manifest.hashes['removed.md'] = 'old';
+  fs.writeFileSync(manifestPath, JSON.stringify(manifest));
+  assert.deepEqual(verifyInstall(f.source, f.dest, 'codex'), ['Manifest differs: SKILL.md', 'Unexpected manifest entry: removed.md']);
 });

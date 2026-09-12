@@ -36,6 +36,8 @@ These are the workflows the skill teaches. See [what has been verified](#what-ha
 
 **Every result has a trail.** New generations are matched to their own job IDs. Variations and edits retain their source relationship, so “use the second one” has a concrete meaning.
 
+**The right image, all the way through.** Reference roles, source fingerprints and candidate indices travel with the job. Recovery checks the visible media as well as the URL, so a stale lightbox cannot quietly turn a neighboring image into your final.
+
 **The model matters.** V8.x Edit Model, V7 Omni Reference and older Character Reference workflows get their own paths. The skill consults current official documentation when capabilities change.
 
 **The original is the deliverable.** Downloads are checked as actual files. Screenshots serve as review evidence; original media gets its own verification.
@@ -98,13 +100,13 @@ Bring a logged-in Midjourney account with the relevant plan/GPU allowance, the h
 **A working package, with a clearly documented test boundary.**
 
 - Skill-format and UI metadata checks passed.
-- Installer tests cover host selection, safe replacement, symlink migration, payload boundaries and npm-style binary execution.
+- Installer tests cover host selection, safe replacement, symlink migration, payload boundaries, npm-style binary execution and complete canonical/host-adapter parity.
 - The distribution archive was extracted, checked and installed successfully.
 - Authenticated website navigation, existing image actions, settings and several feature panels were inspected live.
 
-**New paid generations and uploads have not been tested end to end.** An in-app original-download attempt timed out waiting for the browser download event; no verified saved file was established. Feature coverage is broader than live execution coverage. Website changes and account restrictions can affect availability.
+**The live release gate is still open.** New paid creation and uploaded-reference editing have not passed end to end. The earlier original-download event timeout remains unknown. A subsequent in-app recovery saved and visually checked an existing result's full-resolution 1456×816 JPEG through the supported page-assets API. That is verified file recovery, not proof of the original download button: a lightbox URL/media-index mismatch also occurred and is now covered by the recovery instructions. Feature coverage is broader than live execution coverage.
 
-Read the [verification record](skills/midjourney-web/references/evidence.md) and [official source map](skills/midjourney-web/references/sources.md), reviewed on **2026-09-12**. Purchases, publishing and destructive actions remain subject to the user's authorization and the host's action rules.
+Read the [feature evidence matrix](skills/midjourney-web/references/feature-matrix.md), [verification record](skills/midjourney-web/references/evidence.md) and [official source map](skills/midjourney-web/references/sources.md), reviewed on **2026-09-12**. The matrix separates live UI/file checks, documentation-only workflows, plan gates and retired features. Purchases, publishing and destructive actions remain subject to the user's authorization and the host's action rules.
 
 ## Build on it
 
@@ -113,6 +115,7 @@ The skill lives in [`skills/midjourney-web`](skills/midjourney-web/SKILL.md), wi
 ```sh
 python3 scripts/validate.py
 npm test
+node scripts/verify-install.mjs codex /custom/skills/midjourney-web
 ```
 
 The package validator needs Python 3.10+. These checks cover package structure, links, distribution hygiene and installer behavior. Live generation quality needs live testing. See [RELEASING.md](RELEASING.md) for GitHub publishing and archive verification.

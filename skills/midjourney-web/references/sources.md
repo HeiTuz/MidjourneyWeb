@@ -2,6 +2,8 @@
 
 Reviewed 2026-09-12. This is a routing index, not a frozen claim that every account has every feature. Open the relevant current article when a control, model or limit differs. Prefer the feature-specific article plus actual selected job metadata; report contradictions rather than silently switching models. Never read this whole index as a requirement to browse every article for a simple job.
 
+For current review results, execution coverage, plan gates and retired features, see the [feature matrix](feature-matrix.md). In particular, the Editor article retains a generic gallery/upscale note that conflicts with its newer version-specific Image History & Visibility section. The Legacy article also retains a stale default-version sentence; use the dedicated Version article for the current default.
+
 | Area | Official reference |
 |---|---|
 | Website navigation / Explore / Tasks | [Website Overview](https://docs.midjourney.com/hc/en-us/articles/33329460426765-Website-Overview) |

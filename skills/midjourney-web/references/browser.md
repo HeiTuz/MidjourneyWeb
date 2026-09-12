@@ -5,6 +5,7 @@ Use the currently supplied computer/browser tool contract. This skill supplies M
 ## Entry and inspection
 
 - Reuse a bound, live Midjourney tab. Otherwise inventory tabs with `cua.getState()` or `cua.listTabs` according to first-call rules, then select the observed tab/browser IDs. If there is none, `cua.createBrowserTab("iab", "https://www.midjourney.com", {visible:true})` is the tested first-call shape for a user-visible login. Follow current documentation if this changes.
+- An empty current-task tab list does not mean authentication was lost. If the earlier tab is unavailable, open the recorded job URL in the same in-app browser and inspect it before requesting another login. This recovered an authenticated page in the maintenance test. A tab owned by another active task must not be seized through a different automation surface.
 - After each action, obtain fresh AX state. Numeric indices are ephemeral. Many sidebar links and settings buttons have no accessible name. A URL in the current tree can identify navigation; a screenshot can identify an unlabeled icon. Never paste stored coordinates into a new viewport.
 - Where AX omits selected states, inspect the screenshot or a supported read-only DOM view. Labels such as `Selected Select` can contain both action labels; they do not prove selection. Scope duplicate `Subtle`, `Standard`, `HD`, and `Low Motion` controls to the correct section.
 - Current navigation surfaces: Explore, Create, Edit, Organize, Personalize, Moodboards, Style Creator, Tasks, Help, Updates and account menu. Obtain current URLs from those links. Preserve the user's active creation folder and draft.
@@ -21,6 +22,10 @@ When that error recurs, inspect visible state and bounded error logs. If no gene
 ## Exact job tracking
 
 Before the submit action record visible existing `/jobs/` links, intended text, source image, mode and batch count. After submission match newly appearing jobs with that request; concurrent jobs may belong to the user or another task. Open the matching job and retain the full observed link, including `?index=` when present.
+
+Record both the user's candidate number and the site's literal index (for example candidate 1 / `index=0` only after observing that mapping). Do not increment or normalize an index in a saved URL. At every source-dependent action recheck the lightbox URL and picture: Escape can close both a menu and its lightbox. If numeric AX targeting fails after page hydration, take a fresh DOM snapshot and use an unambiguous observed role/name or exact observed link. Do not retry stale indices.
+
+The URL alone can be insufficient: in a live recovery test a lightbox URL ending in `index=0` displayed media for a different candidate, and Download Image requested that displayed candidate's PNG. Check the visible image's source and viewport position, excluding offscreen prefetch images, against the selected candidate and downloaded file. If they disagree, preserve the discrepancy and reselect through the feed; do not label the neighboring candidate as the requested index or silently rewrite its URL. Persistent disagreement leaves exact-index delivery unverified.
 
 Wait on that job's running/queued status and actual result media. A global `Vary` button, four old CDN images, or `Submitted!` is insufficient. Loaded image elements must have decoded dimensions or an equivalent visual confirmation; a video element needs playable media, not merely a tag. Recheck the requested output count. Use bounded state/event waits, not fixed guesses such as '15 seconds always means finished'. On timeout retain the job identity and current state, then resume the same job later.
 

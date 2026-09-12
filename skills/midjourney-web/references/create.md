@@ -12,6 +12,8 @@ Do not silently disable Personalization for 'reproducibility': it may be the use
 
 Open Add Images; choose a specific upload or upload the authorized local file using the current browser file-upload instructions. Observe the uploaded thumbnail before assigning it. Use the live role buttons or drop zones, then inspect the role and number of attachments. Reusing the uploads library avoids redundant uploads; a different filename alone does not prove image identity.
 
+Before upload, record the source file's bytes, decoded dimensions and SHA256 in the local job record. The current Creating on Web article limits uploads to 10 MB. If conversion or reduction is needed, retain the original and record the derived upload separately. A downloaded reference must match the selected job/index, not a contact sheet, screenshot or neighboring candidate. After upload verify the pictured subject and role; a successful chooser call alone is not an uploaded reference.
+
 | Intent | Input role |
 |---|---|
 | Content, composition or palette inspiration | Image Prompt; `--iw` controls image influence where supported |

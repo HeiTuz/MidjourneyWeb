@@ -36,6 +36,8 @@
 
 **“아까 두 번째 것”을 놓치지 않도록.** 새 생성은 고유 작업 ID로 추적하고, 수정과 변형은 원본과 연결해요. 여러 턴에 걸친 작업은 프로젝트 안에 진행 기록을 남겨 이어갈 수 있어요.
 
+**처음 고른 이미지가 끝까지 맞도록.** 참조 역할, 원본 파일 해시, 후보 인덱스를 함께 기록해요. 복구할 때는 주소뿐 아니라 실제 표시 이미지도 대조해 다른 후보가 납품되는 일을 막도록 했어요.
+
 **모델이 바뀌면 방법도 바뀌어요.** V8.x Edit Model, V7 Omni Reference, 이전 Character Reference를 구분하고 공식 문서로 지원 여부를 확인해요.
 
 **끝은 원본 파일이에요.** 결과를 골랐다면 다운로드와 파일 확인까지. 화면 캡처와 원본 납품을 구분해요.
@@ -98,13 +100,13 @@ npx --yes --allow-git=all --package github:HeiTuz/MidjourneyWeb heituz-midjourne
 
 ## 어디까지 확인했나요?
 
-스킬 형식과 UI 메타데이터, 설치 대상 선택, 기존 파일 보존, 업데이트, 심링크 이전, 배포 파일 범위와 실행 명령을 검사해요. 현재 사이트의 로그인 후 탐색, 기존 이미지 메뉴, 설정과 여러 기능 패널도 직접 확인했어요.
+스킬 형식과 UI 메타데이터, 설치 대상 선택, 기존 파일 보존, 업데이트, 심링크 이전, 배포 파일 범위와 실행 명령을 검사했어요. 설치 파일 전체와 호스트 어댑터가 정본과 같은지도 대조해요. 배포 압축본의 해제·설치와 현재 사이트의 로그인 후 탐색, 기존 이미지 메뉴, 설정과 여러 기능 패널을 확인했어요.
 
-**유료 생성·업로드의 전체 실행은 아직 검증하지 않았어요.** 인앱 원본 다운로드는 버튼을 눌렀지만 다운로드 이벤트 대기가 시간 초과됐고, 실제 저장 파일을 확인하지 못했어요. 기능 안내 범위와 실동작 검증 범위는 달라요.
+**실사용 릴리스 완료 조건은 아직 충족하지 못했어요.** 새 유료 생성과 업로드한 참조의 편집·납품은 미검증이에요. 이전 원본 다운로드 이벤트 시간 초과는 여전히 결과 불명이에요. 이후 인앱 브라우저의 화면 자산 API로 기존 결과의 전체 해상도 `1456×816 JPEG`를 저장하고 열어봤어요. 파일 회수는 확인했지만 원본 다운로드 버튼의 성공을 뜻하지는 않아요. 상세 주소의 인덱스와 실제 표시 이미지가 다른 현상도 확인해 복구 지침에 반영했어요.
 
 세 호스트의 설치 파일을 로컬에서 검사하지만, Claude Code·Hermes의 브라우저 실행과 Windows 설치는 미검증이에요. 스킬은 브라우저 제어 도구나 로그인 정보를 설치하지 않아요. 구매·공개·파괴적 작업은 사용자의 권한 범위와 호스트 규칙을 따라요.
 
-[검증 기록](skills/midjourney-web/references/evidence.md) · [공식 출처 목록](skills/midjourney-web/references/sources.md) — 문서 확인일: **2026-09-12**
+[기능 검증표](skills/midjourney-web/references/feature-matrix.md) · [검증 기록](skills/midjourney-web/references/evidence.md) · [공식 출처 목록](skills/midjourney-web/references/sources.md) — 문서 확인일: **2026-09-12**. 화면·파일 실검증, 문서만 확인한 기능, 플랜 제한과 지원 종료를 구분했어요.
 
 ## 함께 발전시키기
 
@@ -113,6 +115,7 @@ npx --yes --allow-git=all --package github:HeiTuz/MidjourneyWeb heituz-midjourne
 ```sh
 python3 scripts/validate.py
 npm test
+node scripts/verify-install.mjs codex /custom/skills/midjourney-web
 ```
 
 검사기는 Python 3.10 이상을 사용해요. 위 검사는 패키지와 설치 동작을 확인하며 이미지 생성 품질을 증명하지는 않아요. GitHub 공개와 압축본 검증 절차는 [RELEASING.md](RELEASING.md)에 있어요.

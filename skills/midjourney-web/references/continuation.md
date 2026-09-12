@@ -9,8 +9,10 @@ For each logical request record:
 - Request intent and protected visual details; original local source paths or explicitly selected source job/image.
 - Browser/host and current observed task URL, without cookies, credentials or authentication query strings.
 - Actual submitted text, reference roles and identities, selected model, personalization codes, mode, output count and approved remaining job budget.
+- Budget approval wording, unit (jobs or GPU minutes), allowed actions, and reserved amount for submissions whose outcome is unknown. A four-image batch is one job, but HD, variation, upscale and each preview/extension can be another job with a different GPU cost. Do not spend the reserved amount again until the first submission is reconciled.
 - Parent job, new job URL/ID, individual image index; submission time and last observed state.
 - Chosen candidate and observed changes; downloaded file path, decoded dimensions/format, and video duration where relevant.
+- Source/upload/output SHA256 and export kind (original, full-resolution displayed media, preview, or current mask). For a download timeout, retain the original attempt as unknown even if a later recovery succeeds; record the recovery route separately.
 
 Do not infer unseen data. Record unknown fields as unknown. Never put real user data into sample files shipped with this skill.
 

@@ -8,13 +8,15 @@ Browse creator profiles, Follow, search similar images, likes and personal archi
 
 ## Personalization
 
-Open Personalize and wait for the actual profiles and point counts. Select the intended version/profile. To train, open Add Rankings and choose/skip according to user-supplied aesthetic criteria; when those criteria are missing, the user should choose. Confirm point/profile state afterward. Create or rename profiles only as requested. Existing approval for training covers the agreed batch, not endless voting.
+Open Personalize and wait for the actual profiles and point counts. Select the intended version/profile. Training now uses an image-selection grid rather than the older pair-rating flow; follow the visible control, which may still say Add Rankings. Train only within explicit approval and user-supplied aesthetic criteria; when those criteria are missing, the user should choose. Confirm point/profile state afterward. Create or rename profiles only as requested. Existing approval for training covers the agreed batch, not endless voting. Liking community **images** can change Global Profiles, unlike liking Style Explorer **codes**; image likes are not a harmless read-only test when training is excluded.
+
+Global V7 profiles work with V8.1/8.2. Additional V8 profiles do not work with V7; do not assume backwards compatibility from a shared display name.
 
 The P button and adjacent dropdown have different jobs: toggle application versus choose profiles. Inspect both. A profile's display name is not its code, and a profile code can evolve. For continuation read the code from the selected prior job and confirm whether the user wants that historical look or the latest profile. Source: [Personalization](https://docs.midjourney.com/hc/en-us/articles/32433330574221-Personalization).
 
 ## Moodboards
 
-Open the exact board, using ID/URL and thumbnails as well as its name: duplicate names exist in this user's account. New Moodboard supports uploads, URLs and gallery images; inspect the collection and title after changes. Use Moodboard in Prompt and default Select are different operations. Applying one board for a job should not silently change the user's global selections.
+Open the exact board, using ID/URL and thumbnails as well as its name: duplicate names were observed during testing. New Moodboard supports uploads, URLs and gallery images; inspect the collection and title after changes. Use Moodboard in Prompt and default Select are different operations. Applying one board for a job should not silently change the user's global selections.
 
 A board ID follows its changing collection; prior generation codes can preserve historical versions. Record the resolved code on the submitted job, not only the friendly board name. Stylize controls moodboard influence. Moodboards are not compatible with `--sw`/`--sv` according to the current article. Editing a board's membership changes its future aesthetic; don't curate or delete content merely while browsing. Source: [Moodboards](https://docs.midjourney.com/hc/en-us/articles/39193335040013-Moodboards).
 

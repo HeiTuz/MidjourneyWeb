@@ -2,6 +2,10 @@
 
 The repository is prepared locally; no remote publication is implied by these instructions.
 
+The source ZIP and npm tarball have different contracts. The ZIP contains maintenance scripts, tests and AGENTS.md; the npm tarball contains the installer and runtime inputs only. Run the package validator and tests on the checkout/source ZIP, and run the npm tarball's real CLI in an isolated destination. From the checkout, verify that destination with `node scripts/verify-install.mjs codex <installed-skill-directory>`. This compares every payload file and the selected host adapter with canonical bytes, checks the install manifest, and reports extra installed files.
+
+Before calling the skill release-ready, the [feature matrix](skills/midjourney-web/references/feature-matrix.md) must show actual new creation-to-original-file and uploaded-reference-to-edit-to-original-file results. A local package candidate may be committed and archived while that live gate is blocked, but label it accordingly. Do not promote a recovered full-resolution preview into a successful original download.
+
 1. Run the validator and installer tests from README. Create an `npm pack` tarball outside the repository, inspect its allowlisted contents, and execute its binary with an isolated destination (for example `npm exec --offline --package <tarball> -- heituz-midjourney --target codex --dest <temporary-skill-path>`). Verify the copied payload still works after the unpacked source is removed. Review the complete tracked file list and staged diff for private data. Check that evidence labels are still accurate and refresh any changed official feature rules.
 2. With the user's authorization, create or select the exact GitHub repository and visibility. Verify `git remote -v` before pushing. Do not derive the destination owner from a local directory name.
 3. Commit the reviewed content. Make any requested release version/tag only within the approved release scope; do not claim a local commit is a published release.

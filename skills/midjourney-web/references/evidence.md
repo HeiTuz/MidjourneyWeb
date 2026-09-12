@@ -11,6 +11,8 @@ Review date: 2026-09-12. No account identifiers, job IDs, source images, browsin
 
 ## Current verification scope
 
+The compact [feature matrix](feature-matrix.md) maps official current rules to execution evidence and plan/legacy boundaries. It is the release coverage index, not a claim that all features were executed.
+
 | Surface | Evidence level |
 |---|---|
 | Google login | User-completed; authenticated feed later observed; agent did not enter credentials |
@@ -28,6 +30,19 @@ The intended coverage is the website's image workflow and associated style/libra
 Initial validation passed the host skill-format validator, package/reference checks, UI metadata parsing and five Python installer/package tests. That original symlink installer has since been replaced by the Node installer with host selection, runtime copies, backups and isolated tests. Use current test output for the current count. Independent behavioral evaluation was attempted but the provider could not accept the delegated task; no independent-review pass is claimed. The author reviewed the scenarios below against the written procedures.
 
 The subsequent Node installer pass on the same date passed 14 tests, including replacement rollback, all three host payloads, local-data exclusion and execution of the actual npm-packed binary in offline mode. The installed copy remained readable after removal of the test source and npm cache. These are local package tests, not a verified public GitHub install or remote CI run.
+
+## Follow-up maintenance pass
+
+- Started from a clean working tree at the known local installer commit. The runtime installation was confirmed to be a directory copy, not a symlink.
+- Reopened the prior exact job in the same in-app browser when the current task had no tabs. Existing authentication persisted; no new login was needed. A Chrome tab owned by another active task was left alone.
+- Reconciled the old download as far as current evidence permits: no matching file was found in the known Downloads destination. That does not establish non-execution. The earlier event timeout remains unknown.
+- Used the currently documented `pageAssets.list/bundle` capability to save the previously observed result's full-resolution JPEG, then decoded and visually inspected it: 1456×816, JPEG. This verifies displayed-media recovery, not the Download Image original export. Refreshing inventory after a UI change resolved a stale-inventory error.
+- Observed a real identity hazard: the selected lightbox URL retained one index while a neighboring candidate's JPEG was visible. A Download Image click exposed a PNG request for that neighboring candidate. Reselecting the original feed link and refreshing did not establish a matching original download. No wrong-index file was accepted as the requested original. Copy Image URL also returned no usable clipboard text in this host.
+- Revisited Explore → Styles and a style detail; Try Style explicitly indicated immediate submission of the current/latest prompt. Inspected current Organize media/type/resolution/aspect/version/profile/saved-search controls. No likes, taste rankings, public visibility or account changes were performed.
+- Rechecked official Create, Version, Edit Model, Editor, Image Prompts, Style Reference, Describe, Variations, Upscalers, Overview, Personalization, Moodboards, Style Creator, Organize, Folders, Plans, Video and Legacy articles. Corrected version-specific Editor gallery/visibility behavior and documented the conflicting older note.
+- Package validator, host quick validator and 16 Node tests passed, including complete installed-payload/adapter comparisons, stale-file and manifest detection, and the real packed npm CLI in an isolated destination. This remains local validation, not remote CI.
+
+**Remaining core gate:** no explicit GPU budget was found in the available request/history; a bounded-budget question was sent and remained unanswered during this pass. No new GPU job was submitted. New creation → original download and original re-upload → targeted edit → selected original file therefore remain untested. Live release readiness is not achieved. Profile training, Style Creator rounds, video generation, folder mutations and batch exports also remain untested. Private recovery files and job identifiers are kept outside the distributable repository.
 
 ## Behavioral review scenarios
 
