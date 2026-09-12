@@ -4,10 +4,14 @@ Use only for an explicit video/animation request. An image delivery should not s
 
 Open the intended image index, expand Animate Image, and distinguish automatic/loop actions (which can submit immediately) from Animate Manually (prompt preparation). Set source as Starting Frame; add Ending Frame only when intended. Inspect the Image/Video switch, motion, duration/extension state, SD/HD and batch size before submit. Preserve the exact source/child-job relationship.
 
+Image-generation Edit/Style/Image Prompt reference roles are not video inputs. Use the chosen image as the Starting Frame and inspect what remains after switching modes; do not promise image parameters or reference stacks carry over. Video batch size accepts 1, 2 or 4 via `--bs`; choose the requested count explicitly for a one-off job without changing defaults.
+
 Low Motion and High Motion trade stability for more movement; judge actual output rather than promising preservation. Loop uses matching start/end imagery. Extend Auto/Manual continues a selected video; manual allows a changed motion prompt. Bind each extension to its parent and verify resulting duration, seams and subject continuity. Read current allowed extension count and duration rather than hard-coding an old five-second assumption.
 
 For a camera-motion request, distinguish changing the still viewpoint with [Edit](camera-edits.md) from animating continuous camera travel. Describe one clear motion and the subject's intended movement or stillness; avoid simultaneously asking for several incompatible camera moves. Compare first/last frames and intermediate motion for scene drift, rather than treating a good start frame as proof that the video passed.
 
 Wait for the specific job's playable result, compare the requested variants and download the actual selected video. Video presence alone isn't completion: verify the media loads and plays, then check local format/duration. Use the website's displayed download formats; don't derive an MP4 URL from a guessed naming pattern.
+
+Documentation checkpoint 2026-09-13: initial videos are five seconds, extensions add four seconds up to four times (21 seconds total). Each extension incurs generation cost. Use these to plan the requested duration, then verify current limits before submitting. SD/HD pixel dimensions depend on the starting frame and may slightly change its aspect ratio. Raw Video downloads the generated MP4; Download for Social is a separate encoded MP4; GIF is a distinct deliverable. Record which export was selected and do not label a social encode the raw original.
 
 Source: [Video](https://docs.midjourney.com/hc/en-us/articles/37460773864589-Video), [Parameter List](https://docs.midjourney.com/hc/en-us/articles/32859204029709-Parameter-List). Plan, speed and HD availability must be checked live.

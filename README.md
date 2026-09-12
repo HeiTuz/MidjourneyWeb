@@ -33,6 +33,8 @@ These are the workflows the skill teaches. See [what has been verified](#what-ha
 
 Prompt-only requests end with copyable wording without requiring an account session. Website execution preserves unrelated drafts and distinguishes prepared attachments, submitted jobs, visual acceptance and verified files.
 
+The workflow also covers repeat/permutation planning, resolved style codes, folder/search semantics and video export selection. These additions were checked against 13 official articles on 2026-09-13; documentation coverage is separate from live execution evidence.
+
 ## Creative control, down to the details
 
 **Your style stays yours.** Personalization and Moodboards are part of the brief. The skill checks the intended profile and references before making changes.

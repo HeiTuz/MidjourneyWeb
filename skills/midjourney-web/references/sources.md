@@ -4,6 +4,8 @@ Reviewed 2026-09-12. This is a routing index, not a frozen claim that every acco
 
 For current review results, execution coverage, plan gates and retired features, see the [feature matrix](feature-matrix.md). In particular, the Editor article retains a generic gallery/upscale note that conflicts with its newer version-specific Image History & Visibility section. The Legacy article also retains a stale default-version sentence; use the dedicated Version article for the current default.
 
+Additional document review on 2026-09-13 covered Style Reference, Personalization, Moodboards, Style Creator, Video, Organize, Folders, Describe, Upscalers, Parameter List, Seeds, Repeat and Permutations. This was a documentation review, not new GPU or account-operation testing. The Style Reference article also mentions V8.1 Draft inconsistently with the dedicated Version/Parameter List guidance; prefer the model compatibility gate in [create.md](create.md).
+
 | Area | Official reference |
 |---|---|
 | Prompt wording and feedback | [Prompt Basics](https://docs.midjourney.com/hc/en-us/articles/32023408776205-Prompt-Basics) |
@@ -11,6 +13,9 @@ For current review results, execution coverage, plan gates and retired features,
 | Imagine / uploads / settings / feed | [Creating on Web](https://docs.midjourney.com/hc/en-us/articles/33390732264589-Creating-on-Web) |
 | Version and compatibility | [Version](https://docs.midjourney.com/hc/en-us/articles/32199405667853-Version) |
 | All parameter families | [Parameter List](https://docs.midjourney.com/hc/en-us/articles/32859204029709-Parameter-List) |
+| Controlled starting noise | [Seeds](https://docs.midjourney.com/hc/en-us/articles/32604356340877-Seeds) |
+| Repeated image sets | [Repeat](https://docs.midjourney.com/hc/en-us/articles/32757107922061-Repeat) |
+| Expanded prompt combinations | [Permutations](https://docs.midjourney.com/hc/en-us/articles/32761322355597-Permutations) |
 | Content references | [Image Prompts](https://docs.midjourney.com/hc/en-us/articles/32040250122381-Image-Prompts) |
 | Style references and Style Explorer | [Style Reference](https://docs.midjourney.com/hc/en-us/articles/32180011136653-Style-Reference) |
 | Written edits and multiple references | [Edit Model](https://docs.midjourney.com/hc/en-us/articles/48495453462797-Edit-Model) |

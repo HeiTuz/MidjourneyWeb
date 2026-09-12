@@ -4,6 +4,7 @@ Reviewed 2026-09-12. **Live UI** means navigation/control inspection only. **Liv
 
 | Feature | Current official contract | Execution evidence / remaining boundary |
 |---|---|---|
+| Batch and comparison controls | [Repeat](https://docs.midjourney.com/hc/en-us/articles/32757107922061-Repeat), [Permutations](https://docs.midjourney.com/hc/en-us/articles/32761322355597-Permutations), [Seeds](https://docs.midjourney.com/hc/en-us/articles/32604356340877-Seeds) | Documentation-only, rechecked 2026-09-13. Expansion accounting, repeat metadata omission and controlled comparison guidance added; no live batch test. |
 | Viewpoint editing | [Edit Model](https://docs.midjourney.com/hc/en-us/articles/48495453462797-Edit-Model), Changing Perspective | 2026-09-13: one Edit-reference batch, four JPGs reviewed/saved. Rear view improved; coherent whole-scene orbit not established. See [camera edits](camera-edits.md). |
 | Full Editor selection follow-up | [Editor](https://docs.midjourney.com/hc/en-us/articles/32764383466893-Editor), Smart Select | 2026-09-13: same uploaded original; face selection, erase, Undo and Clear all points verified. Full Editor generation, multilayer composition and outpainting remain untested. |
 | Create and settings | [Create](https://docs.midjourney.com/hc/en-us/articles/33390732264589-Creating-on-Web): Imagine, references, persistent settings, folder context | Live-tested: one new V8.2 SD job, four candidates, exact job/index, full-resolution files. Settings inspected without changing defaults. |

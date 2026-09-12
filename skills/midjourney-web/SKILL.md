@@ -21,6 +21,7 @@ description: 미드저니 웹사이트에서 이미지 생성·편집·레퍼런
 | 프롬프트만 작성, 화풍 교정, 결과 피드백 반영 | [프롬프트 준비와 교정](references/prompting.md) |
 | Edit로 시점·카메라 방향 변경, 보존과 재구성 비교 | [시점 변경 실험](references/camera-edits.md) |
 | Imagine/Create, 설정, 참조 이미지, Describe, 여러 프롬프트 | [생성](references/create.md) |
+| 반복·조합 생성 수량, 시드 고정 비교, 설정 대조 | [배치와 비교 실험](references/batch-and-controls.md) |
 | 결과 추적, 변형, 업스케일, HD, 부분 수정, 레이어, 리텍스처 | [수정](references/edit.md) |
 | Explore, 스타일 코드, Personalization, Moodboards, Style Creator | [스타일과 개인화](references/aesthetics.md) |
 | Organize, 검색, 폴더, 좋아요, 휴지통, 공개 범위, 원본 저장 | [정리와 다운로드](references/library.md) |

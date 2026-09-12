@@ -8,6 +8,10 @@ Use observed folder controls for create/rename/group/add/remove. For batch opera
 
 Saved Searches use query rules rather than static membership. Verify matching results after a requested change. Like/Unlike, Spotlight and trash/restore must target the intended image or explicit batch. Trash is recoverable via In Trash and is **not privacy**; it does not permanently delete individual generations. Source: [Organizing Your Creations](https://docs.midjourney.com/hc/en-us/articles/33329462451469-Organizing-Your-Creations).
 
+Filters combine OR within one section and AND across sections. Saved Search terms normally require all terms, while comma-separated alternatives match either; partial-word matching can include unintended results. Preview actual matches before bulk changes. Use the date timeline for known dates rather than scrolling through the whole collection. Do not apply Saved Search syntax to an unrelated search surface without checking its controls.
+
+Folder names must be unique. Deleting a folder leaves its images in the gallery; removing the last folder from a group also removes the empty group. For an authorized reorganization, verify both destination membership and source group state. Folder Download is available from its menu; confirm its membership count before exporting. These effects are documented, not live-tested in this maintenance pass.
+
 ## Download
 
 **Default to full-resolution JPG.** Save the selected result's actual JPEG bytes from the site; using a `.jpg` filename for `.jpeg` media is not conversion. Use PNG when the user requests it or needs that format. Do not upscale or regenerate just to download. A screenshot, thumbnail or contact sheet is not the selected full-resolution file.

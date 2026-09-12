@@ -20,7 +20,15 @@ Official Prompt Basics, Creating on Web, Version, Edit Model and Editor articles
 
 Maintenance validation on 2026-09-13: package/reference validation, skill quick validation, diff whitespace checks and all 21 existing Node tests passed, including isolated packed installation and host payload parity. No installer or bridge code changed. These checks validate the package, not additional live website features.
 
-## Earlier core checkpoint
+## Additional document review — 2026-09-13
+
+Thirteen additional official articles were read: Style Reference, Personalization, Moodboards, Style Creator, Video, Organizing Your Creations, Using Folders, Describe, Upscalers, Parameter List, Seeds, Repeat and Permutations. Added [batch planning](batch-and-controls.md), resolved-style handling, profile/board lifecycle distinctions, search/filter semantics, hidden-upscaler recovery, and video input/export contracts. The Style Reference article's V8.1 Draft sentence was flagged as inconsistent with dedicated model guidance.
+
+No new browser operation, upload, generation, training, deletion or video export was performed in this document-only pass. Existing live evidence remains unchanged. The preceding viewpoint experiment is the only new GPU batch in this maintenance task. The additions explain how to execute these functions; they do not claim those functions passed live testing.
+
+After these additions, package validation, skill quick validation, all 21 Node tests and diff checks passed again. The installer and media bridge implementation were unchanged.
+
+## Earlier image-generation checkpoint
 
 The bounded live budget was four GPU jobs. All four were identified: initial creation, an unintended variation triggered by a feed overlay, a PNG-reference edit, and a separate edit using a JPG downloaded entirely through the in-app browser. No extra jobs, purchases, preference training or public-sharing actions were submitted.
 

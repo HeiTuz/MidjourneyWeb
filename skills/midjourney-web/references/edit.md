@@ -15,6 +15,8 @@ Open the exact source job and image index. Confirm the picture and metadata befo
 
 Use [Modifying Your Creations](https://docs.midjourney.com/hc/en-us/articles/33329329805581-Modifying-Your-Creations) for action selection, [Variations](https://docs.midjourney.com/hc/en-us/articles/32692978437005-Variations) and [Upscalers](https://docs.midjourney.com/hc/en-us/articles/32804058614669-Upscalers) for the current model's behavior. Do not promise that Creative preserves every detail.
 
+If Upscale is absent, inspect Creation Actions → More Options for the hidden Upscale section before declaring it unsupported. Revealing controls is distinct from pressing an upscaler, which immediately submits. For V8.2, SD can be enlarged but already-HD images cannot be upscaled further. Prefer Subtle when preservation matters; Creative adds interpretation. Read the actual source/output dimensions rather than assuming every image is square or HD means a fixed width.
+
 ## Edit Model versus Editor
 
 For camera direction changes, see [camera-edits.md](camera-edits.md). Choose semantic Edit for a new viewpoint; use Editor for spatial masks, composition and canvas work. Moving or rotating a flat layer alone does not reconstruct a new camera angle.

@@ -36,7 +36,11 @@ Use [Parameter List](https://docs.midjourney.com/hc/en-us/articles/3285920402970
 
 ## Describe and conversational input
 
+For repeated or comparative runs, use [batch-and-controls.md](batch-and-controls.md). Record the submitted expansion before it disappears from result metadata; do not reconstruct the requested batch count from a single finished prompt.
+
 [Describe](https://docs.midjourney.com/hc/en-us/articles/32497889043981-Describe): use the upload image menu or an existing creation's context menu. Review its four suggested prompts. Use Prompt prepares text; Run all prompts generates multiple batches. Save useful suggestions before refresh because they are transient.
+
+Dragging an image can expose a dedicated Drop image to describe target. Dropping there requests text suggestions, not an Edit reference: verify the intended drop zone. Describe is not recovery of the original prompt, and repeated analysis may produce different suggestions. The current article describes longer V8.1/8.2 suggestions; review them before using an older model.
 
 [Draft & Conversational Modes](https://docs.midjourney.com/hc/en-us/articles/35577175650957-Draft-Conversational-Modes): conversational mode rewrites the user's input, so it is inappropriate when an exact prompt must be submitted unchanged. Inspect the rewritten prompt and actual resulting job. Voice requires the browser's microphone permission and current feature compatibility. Do not enable it for an ordinary typed prompt request. Draft/Enhance availability depends on model; use the supported refinement action shown on that draft.
 
