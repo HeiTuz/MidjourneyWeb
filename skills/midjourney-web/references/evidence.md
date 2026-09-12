@@ -20,11 +20,14 @@ Review date: 2026-09-12. No account identifiers, job IDs, source images, browsin
 | Editor | Live empty editor: Move/Paint/Select, Erase/Restore, Layers, URL/upload entry and export/submit controls |
 | Organize | Live filter controls observed; no batch mutation performed |
 | Personalize / Style Creator / Tasks | Navigation and controls inspected; no training, profile creation or style session started |
-| New generation / paid modifications / upload / exports | Procedures documented; no new GPU jobs, source uploads or download test performed in this authoring pass |
+| New generation / paid modifications / upload | Procedures documented; no new GPU jobs or source uploads performed |
+| Original download | Existing image's Download Image invoked; the subscribed browser download event timed out after 15 seconds and no saved-file evidence was established. Outcome unverified; not a passed export test |
 
 The intended coverage is the website's image workflow and associated style/library/account navigation, plus its image-to-video branch. This is not a claim of end-to-end testing of every feature. Subscription changes, permanent deletion, publishing and preference training were not exercised. A future release must keep these distinctions accurate.
 
-Local validation passed the host skill-format validator, package/reference checks, UI metadata parsing and five installer/package tests. The installed link resolved to the canonical skill. Independent behavioral evaluation was attempted but the provider could not accept the delegated task; no independent-review pass is claimed. The author reviewed the scenarios below against the written procedures.
+Initial validation passed the host skill-format validator, package/reference checks, UI metadata parsing and five Python installer/package tests. That original symlink installer has since been replaced by the Node installer with host selection, runtime copies, backups and isolated tests. Use current test output for the current count. Independent behavioral evaluation was attempted but the provider could not accept the delegated task; no independent-review pass is claimed. The author reviewed the scenarios below against the written procedures.
+
+The subsequent Node installer pass on the same date passed 14 tests, including replacement rollback, all three host payloads, local-data exclusion and execution of the actual npm-packed binary in offline mode. The installed copy remained readable after removal of the test source and npm cache. These are local package tests, not a verified public GitHub install or remote CI run.
 
 ## Behavioral review scenarios
 

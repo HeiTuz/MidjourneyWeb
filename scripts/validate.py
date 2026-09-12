@@ -13,7 +13,8 @@ def validate(root: Path) -> list[str]:
     content = entry.read_text(encoding='utf-8')
     if not re.match(r'\A---\nname: midjourney-web\ndescription: [^\n]+\n---\n', content):
         errors.append('Invalid required skill frontmatter')
-    required = ['README.md', 'LICENSE', 'RELEASING.md', 'AGENTS.md',
+    required = ['README.md', 'README.ko.md', 'package.json', 'scripts/install.mjs', 'LICENSE', 'RELEASING.md', 'AGENTS.md',
+                'hosts/codex.md', 'hosts/claude.md', 'hosts/hermes.md',
                 'skills/midjourney-web/agents/openai.yaml']
     for relative in required:
         if not (root / relative).is_file():

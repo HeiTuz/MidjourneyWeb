@@ -1,0 +1,29 @@
+{
+  "name": "heituz-midjourney-web",
+  "version": "0.1.0-dev.0",
+  "description": "Browser-first Midjourney website skill for creative agent workflows.",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "heituz-midjourney": "scripts/install.mjs"
+  },
+  "files": [
+    "LICENSE",
+    "README.md",
+    "README.ko.md",
+    "RELEASING.md",
+    "scripts/install.mjs",
+    "hosts/*.md",
+    "skills/midjourney-web/SKILL.md",
+    "skills/midjourney-web/agents/openai.yaml",
+    "skills/midjourney-web/references/*.md",
+    "!**/*.local.md",
+    "!**/*.bak*",
+    "!**/.*"
+  ],
+  "scripts": {
+    "test": "node --test tests/install.test.mjs",
+    "validate": "python3 scripts/validate.py"
+  },
+  "engines": { "node": ">=18" }
+}

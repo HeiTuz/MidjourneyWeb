@@ -16,6 +16,8 @@ Subscribe to the supported browser download event before clicking when the runti
 
 Verify the actual file with local read-only tools: nonzero bytes, decoded format and dimensions; for archives check extraction/count and inspect representative contents. For videos additionally check duration and playback. Preserve original files; use distinct paths for requested exports. A large download may finish after the button click. Deliver absolute file links plus matching source job links. Capture quality evidence separately from original media.
 
+In the inspected in-app runtime, clicking Download Image once did not produce the awaited download event within 15 seconds. Treat that as unverified outcome, not proof of failure or proof that a file exists. Inspect the supported downloads UI or returned file artifacts before retrying. If the runtime cannot expose the saved file, explain the exact delivery gap and offer the same source job in the user's chosen alternate browser; do not change browser or repeat downloads blindly.
+
 ## Visibility and account features
 
 Read the current plan/availability when a feature is gated. Default visibility changes do not retroactively change existing creations. Requested privacy changes require checking the selected existing jobs separately. Stealth is plan-dependent, and trashing is not making private. Website and Discord settings may sync. Source: [Stealth Mode](https://docs.midjourney.com/hc/en-us/articles/32019750070669-Stealth-Mode).
