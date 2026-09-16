@@ -159,7 +159,10 @@ test('packed npm payload excludes local data and runs offline from its binary', 
   fs.writeFileSync(path.join(f.source, 'skills', 'midjourney-web', 'references', 'private.local.md'), 'private test fixture');
   fs.writeFileSync(path.join(f.source, 'private.log'), 'private test fixture');
   const cache = path.join(f.dir, 'npm-cache');
-  const packed = JSON.parse(execFileSync('npm', ['pack', '--json', '--ignore-scripts', '--cache', cache, '--pack-destination', f.dir], { cwd: f.source, encoding: 'utf8' }))[0];
+  const packReport = JSON.parse(execFileSync('npm', ['pack', '--json', '--ignore-scripts', '--cache', cache, '--pack-destination', f.dir], { cwd: f.source, encoding: 'utf8' }));
+  // npm <= 11.15 reports an array of packages; npm 12 keys the report by package name.
+  const packed = Array.isArray(packReport) ? packReport[0] : Object.values(packReport)[0];
+  assert.ok(packed && Array.isArray(packed.files), 'npm pack --json report shape not recognized');
   assert.ok(packed.files.every(file => !/private|node_modules|\.git\//.test(file.path)));
   assert.ok(packed.files.some(file => file.path === 'README.ko.md'));
   const archive = path.join(f.dir, packed.filename);
