@@ -16,6 +16,12 @@ Two further image GPU jobs used identical neutral prompt text and displayed sett
 
 The expanded Imagine bar showed each role before submission, and each completed job showed the intended single role. While preparing the comparison, the bar's “clear image prompts” control removed both loaded reference roles; a role-labelled button on the existing job added back one role at a time. No extra job was submitted during that correction. Private job IDs, exact prompt and images remain outside this repository.
 
+## Smart Select generation and file delivery — 2026-09-23
+
+One additional full Editor GPU job reused the painted photographer/window JPG from the combined-reference batch. The full `/editor/` view showed the pictured source and active Layer 1. A Smart Select Include point on the jacket selected the entire photographer silhouette, excluding most of the vintage camera. The green selection was inspected before Erase Selection; afterward the silhouette became checkerboard while the window, crowd and camera remained pictured. The edit instruction therefore targeted rebuilding the whole photographer in a muted brick-red jacket, aligned to the remaining camera, rather than claiming a jacket-only mask.
+
+Submit Edit produced four completed candidates. All four were opened in the Editor. The selected candidate showed the red jacket and broadly preserved the camera placement and window/crowd composition, but the regenerated face and coat looked markedly more photographic than the original ink-wash painting. It is a successful selection → erase → generation → original-file workflow, not a successful style-preservation result. The exact child job appeared in Create with an Edit reference, Raw and the source's 91:51 ratio; the requested model version was not separately exposed in the inspected metadata. The selected full-resolution JPEG was saved from its loaded job/index asset and decoded at 1456×816. No second submission was made. The private job ID, prompt, and file remain outside this repository.
+
 ## Verified core workflow
 
 The core checkpoint below is from 2026-09-12. A separate 2026-09-13 maintenance experiment is recorded next; it does not change the earlier four-job accounting.
