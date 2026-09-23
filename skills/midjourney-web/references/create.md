@@ -4,9 +4,24 @@
 
 For writing or correcting text, use [prompting.md](prompting.md). Before replacing an unrelated Imagine draft, preserve its text and attachment identities in the task record or use a separate creation tab when supported. Do not discard unfinished work just to clear the bar.
 
-Open Create through the sidebar. Check the Imagine bar, active folder, reference thumbnails/roles, Personalization selection and settings. Text belongs in the web Imagine bar without a Discord `/imagine prompt:` prefix. Enter submits; Cmd+Enter can submit while retaining text, so it is not a harmless editing shortcut. Read the final text back before one submit. Use the exact-job protocol in `browser.md`.
+Open Create through the sidebar. Check the Imagine bar, active folder and reference thumbnails/roles. Inspect inherited Personalization or other UI settings only when they affect the requested job or a parameter cannot express the choice; do not open Settings for every one-off option. Text belongs in the web Imagine bar without a Discord `/imagine prompt:` prefix. Enter submits; Cmd+Enter can submit while retaining text, so it is not a harmless editing shortcut. Read the final text back before one submit. Use the exact-job protocol in `browser.md`.
 
-Settings include aspect ratio, version, SD/HD, Raw, stylization, weirdness, variety and GPU speed. Video has separate resolution/batch controls. The actual selected UI or job metadata wins over historical defaults. For one-off overrides prefer supported prompt parameters over changing persistent defaults. Explicitly requested default changes should be read back after saving.
+## One-off option routing
+
+For a single job, put supported options at the **end of the Imagine prompt** with ASCII `--`, instead of opening Settings and changing account defaults. Keep the user's existing compatible flags; do not append a duplicate or a conflicting value. Confirm model, plan and parameter compatibility before submission, then read back the final Imagine text and the resulting job metadata. A typed flag alone does not prove it took effect. Change persistent UI defaults only when the user asks for defaults to change, and read them back after saving.
+
+| One-job intent | Prompt parameter, when supported |
+|---|---|
+| Frame, model, image resolution, Raw | `--ar <ratio>`, `--v <version>`, `--sd` / `--hd`, `--raw` |
+| Stylization, variety, weirdness, exclusion | `--s <value>`, `--c <value>`, `--w <value>`, `--no <subject>` |
+| Reproducible comparison, seamless pattern | `--seed <number>`, `--tile` |
+| Attached image/style influence | `--iw <value>`, `--sref <observed code>` and compatible `--sw <value>` |
+| Existing profile or Moodboard | `--p <observed ID/code>`; use `--p` only when the intended default profile is clear |
+| Requested speed, visibility, repeat | `--fast` / `--relax`, `--stealth` / `--public`, `--r <count>` when eligible |
+
+Do not select a faster paid speed, change visibility, or expand repeat merely to avoid UI work. V8.x does not support Turbo, Draft, quality or multi-prompt weighting; `--hd` and other parameters still require model-specific checks. Repeat/permutations multiply jobs: count expansion before submission and stay within the requested amount. `--seed` does not guarantee identical subjects. See [batch controls](batch-and-controls.md) for counts and comparisons.
+
+The website still handles **uploading and assigning reference roles**, selecting the source image, Editor masks/layers, post-generation actions and downloads. Video Starting/Ending Frame attachments and **video SD/HD resolution** also use the UI; do not substitute image `--sd` / `--hd` for video resolution. Inspect active reference roles and any inherited draft flags before submitting. The actual selected UI or job metadata wins over historical defaults.
 
 Do not silently disable Personalization for 'reproducibility': it may be the user's intended aesthetic. For comparisons keep the same recorded profile/code, references and settings while varying the requested factor. Record changed factors; a seed is not an identity guarantee.
 
@@ -34,7 +49,7 @@ For a one-role comparison, inspect the expanded Imagine bar immediately before e
 
 Checked 2026-09-12 against [Version](https://docs.midjourney.com/hc/en-us/articles/32199405667853-Version): V8.2 is the documented default. V8.1/8.2 use Edit Model instead of Omni/Character Reference; V7 retains Omni; V6 retains Character Reference. V8.x does not support the quality parameter, multi-prompt weighting, Turbo, or Draft in that compatibility chart. A visible Draft shortcut alone does not establish support for the currently chosen model. Consult the feature article and live UI when they disagree. Niji is a separate model family; verify its selected version instead of treating it as V8.
 
-Use [Parameter List](https://docs.midjourney.com/hc/en-us/articles/32859204029709-Parameter-List) to route requests for `--ar`, `--raw`, `--s`, `--c`, `--w`, `--seed`, `--no`, `--tile`, `--p`, `--sref`, `--iw`, speed and repeat. Check the individual linked article for ranges. Repeat and permutations multiply jobs: count expansion before submission and stay within the requested amount. Do not copy unsupported flags from an older prompt to a newer model.
+Use [Parameter List](https://docs.midjourney.com/hc/en-us/articles/32859204029709-Parameter-List) and the individual feature articles for current ranges and compatibility. Do not copy unsupported flags from an older prompt to a newer model.
 
 ## Describe and conversational input
 

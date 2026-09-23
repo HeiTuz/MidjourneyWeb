@@ -21,7 +21,7 @@ If Upscale is absent, inspect Creation Actions → More Options for the hidden U
 
 For camera direction changes, see [camera-edits.md](camera-edits.md). Choose semantic Edit for a new viewpoint; use Editor for spatial masks, composition and canvas work. Moving or rotating a flat layer alone does not reconstruct a new camera angle.
 
-[Edit Model](https://docs.midjourney.com/hc/en-us/articles/48495453462797-Edit-Model) supports written modification instructions and up to four references in V8.1/8.2. It can combine with Image Prompts, Style References, Moodboards/Personalization and HD. It is not compatible with tile, and Edit Model results currently do not support Remix. Use explicit 'change X, preserve Y' instructions when editing. Quick Edit can be useful for semantic changes; the masked Editor is preferable when the region is exact.
+[Edit Model](https://docs.midjourney.com/hc/en-us/articles/48495453462797-Edit-Model) supports written modification instructions and up to four references in V8.1/8.2. It can combine with Image Prompts, Style References, Moodboards/Personalization and HD. It is not compatible with tile, and Edit Model results currently do not support Remix. Use explicit 'change X, preserve Y' instructions when editing. Put supported one-off options such as `--ar` or compatible `--hd` in the edit prompt instead of changing account defaults; keep source attachment, mask and layer work in the UI. Quick Edit can be useful for semantic changes; the masked Editor is preferable when the region is exact.
 
 ## Editor procedure
 

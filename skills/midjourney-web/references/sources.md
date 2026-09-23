@@ -8,6 +8,8 @@ Additional document review on 2026-09-13 covered Style Reference, Personalizatio
 
 Version, Creating on Web, Edit Model and Editor were checked again on 2026-09-23 alongside one combined-reference batch and one full-Editor masked batch. The live results and limits are recorded in [evidence.md](evidence.md); this selective check does not refresh every article in this index.
 
+On 2026-09-23, the parameter-first routing was checked against current Parameter List, Version, GPU Speed, Stealth Mode, Edit Model, Video, Style Reference, Image Prompts, Personalization and Moodboards articles. This was documentation review only; no new job tested these flags.
+
 | Area | Official reference |
 |---|---|
 | Prompt wording and feedback | [Prompt Basics](https://docs.midjourney.com/hc/en-us/articles/32023408776205-Prompt-Basics) |
@@ -15,6 +17,7 @@ Version, Creating on Web, Edit Model and Editor were checked again on 2026-09-23
 | Imagine / uploads / settings / feed | [Creating on Web](https://docs.midjourney.com/hc/en-us/articles/33390732264589-Creating-on-Web) |
 | Version and compatibility | [Version](https://docs.midjourney.com/hc/en-us/articles/32199405667853-Version) |
 | All parameter families | [Parameter List](https://docs.midjourney.com/hc/en-us/articles/32859204029709-Parameter-List) |
+| Per-job GPU speed | [GPU Speed](https://docs.midjourney.com/hc/en-us/articles/32016412137741-GPU-Speed-Fast-Relax-Turbo) |
 | Controlled starting noise | [Seeds](https://docs.midjourney.com/hc/en-us/articles/32604356340877-Seeds) |
 | Repeated image sets | [Repeat](https://docs.midjourney.com/hc/en-us/articles/32757107922061-Repeat) |
 | Expanded prompt combinations | [Permutations](https://docs.midjourney.com/hc/en-us/articles/32761322355597-Permutations) |

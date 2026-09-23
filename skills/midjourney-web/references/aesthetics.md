@@ -10,7 +10,7 @@ Browse creator profiles, Follow, search similar images, likes and personal archi
 
 ## Image styles versus numerical codes
 
-An uploaded Style Reference is not convertible into its own numerical `--sref` code. Keep the image reference itself; use Style Explorer or Style Creator when a numerical style code is wanted. With `--sref random`, preserve the resolved code for a repeatable look. A rerun of that resolved result retains the code, whereas new random inputs may explore different styles.
+An uploaded Style Reference is not convertible into its own numerical `--sref` code. Keep the image reference itself; use Style Explorer or Style Creator when a numerical style code is wanted. Apply an already observed style code for one job with `--sref <code>` and compatible `--sw <value>` in the prompt instead of changing a persistent UI selection. With `--sref random`, preserve the resolved code for a repeatable look. A rerun of that resolved result retains the code, whereas new random inputs may explore different styles.
 
 For ordinary style-reference generation, describe content and add only style words that agree with the reference. Edit Model can accept modification instructions, so do not apply the ordinary content-only advice to all editing. Record `--sv` with an older style code when compatibility matters; the same code across model/style-reference versions may look different. The Style Reference article contains a V8.1 Draft mention that conflicts with the dedicated Version/Parameter List guidance; do not enable V8.x Draft from that sentence.
 
@@ -24,13 +24,13 @@ Global V7 profiles work with V8.1/8.2. Additional V8 profiles do not work with V
 
 There is currently no separate Global V8 profile. New additional profiles follow the default model version; inspect that setting before requested profile creation. Global profiles cannot be deleted. Deleting an additional profile removes further training access but does not invalidate its already generated codes. Do not confuse that with deleting the generated images.
 
-The P button and adjacent dropdown have different jobs: toggle application versus choose profiles. Inspect both. A profile's display name is not its code, and a profile code can evolve. For continuation read the code from the selected prior job and confirm whether the user wants that historical look or the latest profile. Source: [Personalization](https://docs.midjourney.com/hc/en-us/articles/32433330574221-Personalization).
+The P button and adjacent dropdown have different jobs: toggle application versus choose profiles. For a one-job override, use `--p <observed profile ID/code>` in the prompt rather than changing the default selection. Inspect any active P selection and the submitted job to avoid unintended stacking. A profile's display name is not its code, and a profile code can evolve. For continuation read the code from the selected prior job and confirm whether the user wants that historical look or the latest profile. Source: [Personalization](https://docs.midjourney.com/hc/en-us/articles/32433330574221-Personalization).
 
 ## Moodboards
 
 Open the exact board, using ID/URL and thumbnails as well as its name: duplicate names were observed during testing. New Moodboard supports uploads, URLs and gallery images; inspect the collection and title after changes. Use Moodboard in Prompt and default Select are different operations. Applying one board for a job should not silently change the user's global selections.
 
-A board ID follows its changing collection; prior generation codes can preserve historical versions. Record the resolved code on the submitted job, not only the friendly board name. Stylize controls moodboard influence. Moodboards are not compatible with `--sw`/`--sv` according to the current article. Editing a board's membership changes its future aesthetic; don't curate or delete content merely while browsing. Source: [Moodboards](https://docs.midjourney.com/hc/en-us/articles/39193335040013-Moodboards).
+A board ID follows its changing collection; prior generation codes can preserve historical versions. Use an observed board ID/code with `--p` for one job rather than changing the default board; record the resolved code on the submitted job, not only the friendly board name. Stylize controls moodboard influence. Moodboards are not compatible with `--sw`/`--sv` according to the current article. Editing a board's membership changes its future aesthetic; don't curate or delete content merely while browsing. Source: [Moodboards](https://docs.midjourney.com/hc/en-us/articles/39193335040013-Moodboards).
 
 Deleting a board removes the editable collection, but previously generated codes remain usable. A code still working does not prove the board was restored. Multiple boards and ranking profiles may be selected together: inspect the full selection rather than treating one visible name as the complete aesthetic input.
 

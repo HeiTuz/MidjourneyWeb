@@ -2,7 +2,7 @@
 
 For a prompt-only request, return one copyable block unless alternatives were requested. Keep upload/reference-role instructions outside the block; local paths and unresolved placeholders are not usable website URLs. An explicitly chosen, available authoring workflow such as MPW owns prompt preparation; this skill owns authorized website execution. Do not claim a reference or parameter was applied until observed on the submitted job.
 
-Describe subject, visible action, framing and treatment concretely. Put compatible parameters at the end with ASCII `--`; omit the Discord command prefix on web. Preserve exact supplied wording when execution rather than rewriting was requested. Read [Create](create.md) for version and attachment compatibility; do not invent current account settings when preparing text offline.
+Describe subject, visible action, framing and treatment concretely. Put compatible one-off parameters at the end with ASCII `--`; omit the Discord command prefix on web. Preserve exact supplied wording and existing flags when execution rather than rewriting was requested; resolve conflicting flags instead of stacking them. MPW or another selected authoring workflow can own the prose while this skill checks website execution flags. Read [Create](create.md#one-off-option-routing) for parameter routing, version and attachment compatibility; do not invent current account settings, profile codes or reference URLs when preparing text offline.
 
 A still intended as a video start frame describes one visible moment. Camera travel and events unfolding over time belong in the motion prompt. Do not pack an entire sequence into one still.
 

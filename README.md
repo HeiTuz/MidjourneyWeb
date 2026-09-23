@@ -10,6 +10,8 @@ Find a look. Bring your references. Shape the image. Push a variation. Pick your
 
 MidjourneyWeb is a **browser-first agent skill** built around the way creative work actually happens: exploring, comparing, changing your mind, and getting the details right. It gives Codex practical instructions for working inside Midjourney—from the first prompt to the final download—with your references and personal style at the center.
 
+For a single generation, supported options such as aspect ratio, model, Raw and image SD/HD go in prompt parameters. The website handles reference uploads and roles, Editor masks/layers and video resolution; account defaults change only when requested.
+
 **Built for Codex's in-app browser · V8.x-aware · MIT licensed**
 
 ---
