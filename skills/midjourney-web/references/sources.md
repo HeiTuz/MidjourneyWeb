@@ -6,6 +6,8 @@ For current review results, execution coverage, plan gates and retired features,
 
 Additional document review on 2026-09-13 covered Style Reference, Personalization, Moodboards, Style Creator, Video, Organize, Folders, Describe, Upscalers, Parameter List, Seeds, Repeat and Permutations. This was a documentation review, not new GPU or account-operation testing. The Style Reference article also mentions V8.1 Draft inconsistently with the dedicated Version/Parameter List guidance; prefer the model compatibility gate in [create.md](create.md).
 
+Version, Creating on Web, Edit Model and Editor were checked again on 2026-09-23 alongside one combined-reference batch and one full-Editor masked batch. The live results and limits are recorded in [evidence.md](evidence.md); this selective check does not refresh every article in this index.
+
 | Area | Official reference |
 |---|---|
 | Prompt wording and feedback | [Prompt Basics](https://docs.midjourney.com/hc/en-us/articles/32023408776205-Prompt-Basics) |

@@ -2,6 +2,20 @@
 
 Reviewed 2026-09-12. Private job IDs, account data, prompt bodies, images and logs are excluded from this repository. See the [feature matrix](feature-matrix.md) for per-feature status and official links.
 
+## Combined references and full Editor generation — 2026-09-23
+
+Two image GPU jobs were submitted in the Codex in-app browser. The first reused a previously recorded source job's Style Reference and Image Prompt. Both roles and the requested aspect, Raw and stylize settings appeared on the new job. Four candidates completed; one full-resolution 1456×816 JPG was saved and decoded. All retained the painted palette and window/photographer composition, but none showed the requested lowered camera. This tests the two roles together, not each role's independent effect or reference weight.
+
+The selected JPG was uploaded into the sidebar's full Edit tab, where the pictured source and active Layer 1 were confirmed. The gallery's Open Editor action had entered the light `/edit/` surface instead. An initial 100 px erase stroke reached outside the intended camera region; Undo restored it. A 40 px brush produced a localized checkerboard mask over the camera. One Submit Edit generated four candidates. One candidate gave the camera body a warm brown/red cast while keeping the face, hands, window and painted treatment broadly intact; it did not fully meet the requested muted brick-red color. The selected generated JPG was saved and decoded at 1456×816. No retry or extra GPU job was submitted.
+
+The Editor result panel displayed thumbnails in reverse numeric order. Selection was confirmed from the live `job_id` and `index` in the URL and the displayed image, not thumbnail position. The new full Editor job also appeared in Create. Its Create metadata showed an Edit reference, Raw and the source image's exact 91:51 pixel ratio; the requested version was not exposed separately in the inspected job metadata. These observations do not establish Stealth behavior, Smart Select generation, layered composition or perfect preservation. The private record and both saved JPGs remain outside this repository.
+
+## Single-role reference comparison — 2026-09-23
+
+Two further image GPU jobs used identical neutral prompt text and displayed settings (16:9, Raw, stylize 200, V8.2 requested). One resulting job showed only the Style Reference role; the other showed only the Image Prompt role. Each completed four candidates. The first candidate from each was visually inspected, saved from the loaded full-resolution image asset and decoded as a 1456×816 JPG. Both showed the photographer, window, crowd and painted palette, but neither visibly lowered the camera. The style-only first candidate framed the camera and upper body more tightly; the image-only first candidate placed the figure beside a broad window and crowd. These are observations of two samples, not proof that a particular reference caused those differences. The source image and style reference were visually related, the combined-reference job used different prompt wording, and no seed was confirmed. Reference weights and repeatability remain untested.
+
+The expanded Imagine bar showed each role before submission, and each completed job showed the intended single role. While preparing the comparison, the bar's “clear image prompts” control removed both loaded reference roles; a role-labelled button on the existing job added back one role at a time. No extra job was submitted during that correction. Private job IDs, exact prompt and images remain outside this repository.
+
 ## Verified core workflow
 
 The core checkpoint below is from 2026-09-12. A separate 2026-09-13 maintenance experiment is recorded next; it does not change the earlier four-job accounting.
@@ -60,7 +74,7 @@ The bounded live budget was four GPU jobs. All four were identified: initial cre
 
 Explore → Styles and style-detail controls were inspected; Try Style explicitly submits the current/latest prompt. Current Organize filters, profiles and saved-search controls were inspected. A local erase mask was applied only inside the test sphere, visibly became checkerboard, and Undo restored the source; no masked generation was submitted. Earlier same-day inspection covered Moodboards, empty full Editor/layers, Personalize, Style Creator and Tasks.
 
-Describe execution, HD/upscale, generated masked/layer edits, other reference roles, profile training, board/folder mutations, Style Creator rounds, batch archives and new video generation remain untested. Video history or menu presence is not a completed video test. Plan-gated and retired features are labeled separately in the matrix.
+Describe execution, HD/upscale, Smart Select driven generation, layered composition, profile training, board/folder mutations, Style Creator rounds, batch archives and new video generation remain untested. Image Prompt and Style Reference have combined and separate live batches, but causal effect and weight controls remain unproven. Other reference roles remain untested. Video history or menu presence is not a completed video test. Plan-gated and retired features are labeled separately in the matrix.
 
 ## Package verification
 

@@ -28,6 +28,8 @@ Before upload, record the source file's bytes, decoded dimensions and SHA256 in 
 
 An attachment changes available modes. Confirm Image versus Video before submitting. The reference lock keeps images between prompts; stale locked images must not bleed into a different request. Clear only attachments not intended for the next generation. Multiple Edit references need unambiguous descriptions of which subject/object comes from which image. Never use a local file path as an online reference URL.
 
+For a one-role comparison, inspect the expanded Imagine bar immediately before each submit. A role-labelled reference button on an existing job can add just that reference to an otherwise empty bar. In one live web session, the bar's “clear image prompts” control removed *both* an Image Prompt and a Style Reference; do not assume that control removes only the named role. Check the resulting job metadata for exactly the intended role and keep the text and available settings identical across comparison jobs. If a seed cannot be read back, record that limitation rather than claiming a seed-controlled comparison.
+
 ## Version gate
 
 Checked 2026-09-12 against [Version](https://docs.midjourney.com/hc/en-us/articles/32199405667853-Version): V8.2 is the documented default. V8.1/8.2 use Edit Model instead of Omni/Character Reference; V7 retains Omni; V6 retains Character Reference. V8.x does not support the quality parameter, multi-prompt weighting, Turbo, or Draft in that compatibility chart. A visible Draft shortcut alone does not establish support for the currently chosen model. Consult the feature article and live UI when they disagree. Niji is a separate model family; verify its selected version instead of treating it as V8.

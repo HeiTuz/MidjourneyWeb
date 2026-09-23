@@ -25,11 +25,15 @@ For camera direction changes, see [camera-edits.md](camera-edits.md). Choose sem
 
 ## Editor procedure
 
-The gallery's light Editor and the sidebar's full Edit page are different surfaces. Use the full page for uploaded images, layers and export controls. Preserve any existing draft; open a separate tab for an independent experiment rather than resetting the user's canvas.
+The gallery's light Editor and the sidebar's full Edit page are different surfaces. A gallery image's Open Editor action can enter the light `/edit/` view; use the sidebar Edit tab or the light Editor's Open in Edit tab action for the full `/editor/` view. Verify the URL and layer controls before relying on full-Editor features. Preserve any existing draft; open a separate tab for an independent experiment rather than resetting the user's canvas.
 
 Choose mask scope deliberately. For a local change, erase only the target region. For a V8.x whole-image style change, the official Editor walkthrough permits submitting instructions with no erase/selection; an unmasked submission is not necessarily a no-op. This can be explored for global semantic changes such as viewpoint, but do not report viewpoint generation in full Editor as tested merely because the same instruction worked with an Imagine-bar Edit reference. Inspect active layer, mask, version and resulting job separately.
 
 Open the source in Editor or use Edit from URL / Edit Uploaded Image. Inspect source, active layer, canvas boundaries and prompt. Use Move/Resize to place and scale; Paint to erase/restore; Select for Smart Select. Green selection is not an applied erase mask: apply Erase Selection or Erase Background, then verify checkerboard only in the intended region. Undo/Restore repairs a wrong mask before submitting. A broad canvas-wide drag is never an acceptable substitute for a small region.
+
+For a small target, reduce the brush size before erasing. Inspect the first checkerboard stroke against the actual canvas coordinates; Undo and try a smaller brush if it reaches protected content. When importing a local file, subscribe to the browser's filechooser event before clicking the upload control, then verify the pictured source and active layer. After submission, read the child job metadata: the Editor can show the source's exact pixel ratio (for example 91:51 for a 1456×816 image) and can rewrite the input bar's parameter display. The prepared text alone does not prove the effective settings.
+
+The full Editor result panel may display candidate thumbnails in a different order from their numeric indices. Select each relevant thumbnail, verify the observed child job ID and `index` in the URL against the displayed picture, and save the chosen generated image rather than a current-mask export. One 2026-09-23 masked edit generated four candidates and a full-resolution JPG; the requested color was only partially matched. See [evidence.md](evidence.md).
 
 Add/reorder layers with the Layers controls and verify the active layer. Submit only after checking visible protected content and transparency. Results must be inspected for both requested edits and preservation. Retexture is integrated in the V8.x Edit Model; the separate legacy Retexture tab requires a compatible older version. Distinguish Save Original Generation from Save Current Edit (which can export transparency).
 

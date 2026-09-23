@@ -1,6 +1,6 @@
 {
   "name": "heituz-midjourney-web",
-  "version": "0.1.0-dev.0",
+  "version": "0.1.0-dev.1",
   "description": "Browser-first Midjourney website skill for creative agent workflows.",
   "license": "MIT",
   "type": "module",
