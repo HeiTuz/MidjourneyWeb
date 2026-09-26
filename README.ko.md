@@ -102,10 +102,10 @@ node scripts/install.mjs --target codex --force
 ### GitHub 설치 명령
 
 ```sh
-npx --yes --allow-git=all --package github:HeiTuz/MidjourneyWeb heituz-midjourney -- --target codex
+bunx --package github:HeiTuz/MidjourneyWeb heituz-midjourney -- --target codex
 ```
 
-소스와 배포 압축본은 [HeiTuz/MidjourneyWeb](https://github.com/HeiTuz/MidjourneyWeb)에서 받을 수 있어요. 원격 설치와 로컬 패키지 검증은 별개이며, 확인한 경로는 [검증 기록](skills/midjourney-web/references/evidence.md)에 남겨요. 확인된 기존 설치는 같은 명령에 `--force`를 붙여 업데이트해요. GitHub 설치에는 Git이 필요하며, Git 허용 옵션은 이 명령에만 적용돼요.
+소스와 배포 압축본은 [HeiTuz/MidjourneyWeb](https://github.com/HeiTuz/MidjourneyWeb)에서 받을 수 있어요. 원격 설치와 로컬 패키지 검증은 별개이며, 확인한 경로는 [검증 기록](skills/midjourney-web/references/evidence.md)에 남겨요. 확인된 기존 설치는 같은 명령에 `--force`를 붙여 업데이트해요. GitHub 설치에는 Git이 필요해요. Bun 대신 Node/npm을 쓰려면 `npx --yes --allow-git=all --package github:HeiTuz/MidjourneyWeb heituz-midjourney -- --target codex`를 실행하세요.
 
 ## 어디까지 확인했나요?
 

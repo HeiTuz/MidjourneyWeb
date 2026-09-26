@@ -55,7 +55,7 @@ The workflow also covers repeat/permutation planning, resolved style codes, fold
 
 ## Start here
 
-From a local checkout, install with the same Node installer flow used across the HeiTuz skill family:
+From a local checkout, run the installer directly:
 
 ```sh
 node scripts/install.mjs --target codex
@@ -94,13 +94,13 @@ Omit `--target` for directory-based detection. Interactive terminals offer a cho
 
 `--force` replaces only a recognized MidjourneyWeb install and keeps a backup outside the skill discovery tree, under `~/.local/share/heituz/midjourney-web/backups`. It also migrates this project's original source symlink. Unrelated directories, files and symlinks are refused. To uninstall, remove the installed `midjourney-web` directory after preserving anything you added; keep the canonical checkout if you maintain the project. Skill discovery may require a new task.
 
-**GitHub installation command:**
+**GitHub installation command (Bun):**
 
 ```sh
-npx --yes --allow-git=all --package github:HeiTuz/MidjourneyWeb heituz-midjourney -- --target codex
+bunx --package github:HeiTuz/MidjourneyWeb heituz-midjourney -- --target codex
 ```
 
-Source and release archives are available at [HeiTuz/MidjourneyWeb](https://github.com/HeiTuz/MidjourneyWeb). Remote installation is separate from local package validation; see [the evidence record](skills/midjourney-web/references/evidence.md) for tested routes. The same command with `--force` updates a recognized install. The Git allowance applies to that command only; no global npm setting is changed. Git is required for this route.
+Source and release archives are available at [HeiTuz/MidjourneyWeb](https://github.com/HeiTuz/MidjourneyWeb). Remote installation is separate from local package validation; see [the evidence record](skills/midjourney-web/references/evidence.md) for tested routes. The same command with `--force` updates a recognized install. Git is required for this route. With Node/npm instead of Bun, use `npx --yes --allow-git=all --package github:HeiTuz/MidjourneyWeb heituz-midjourney -- --target codex`.
 
 Bring a logged-in Midjourney account with the relevant plan/GPU allowance, the host's supported browser tool, and local file inspection tools. Codex uses the in-app browser by default; Claude Code and Hermes receive their own transport guidance. The package includes instructions, references and a small Node loopback media helper; it does not install a browser controller or private API client. The three installation payloads are tested locally; live browser execution on Claude Code/Hermes and Windows installation are not yet tested.
 
