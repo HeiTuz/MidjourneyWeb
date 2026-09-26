@@ -100,7 +100,17 @@ Omit `--target` for directory-based detection. Interactive terminals offer a cho
 bunx --package github:HeiTuz/MidjourneyWeb heituz-midjourney -- --target codex
 ```
 
-Source and release archives are available at [HeiTuz/MidjourneyWeb](https://github.com/HeiTuz/MidjourneyWeb). Remote installation is separate from local package validation; see [the evidence record](skills/midjourney-web/references/evidence.md) for tested routes. The same command with `--force` updates a recognized install. Git is required for this route. If Bun is missing, install the latest stable release with the [official installer](https://bun.com/docs/installation): `curl -fsSL https://bun.com/install | bash` on macOS/Linux or `powershell -c "irm bun.sh/install.ps1|iex"` on Windows, then run the command above.
+Source and release archives are available at [HeiTuz/MidjourneyWeb](https://github.com/HeiTuz/MidjourneyWeb). Remote installation is separate from local package validation; see [the evidence record](skills/midjourney-web/references/evidence.md) for tested routes. The same command with `--force` updates a recognized install. Git is required for this route. If Bun is missing, these commands install the latest stable release with the [official installer](https://bun.com/docs/installation) and then install MidjourneyWeb:
+
+```sh
+bun_cmd="$(command -v bun || true)"; if [ -z "$bun_cmd" ]; then curl -fsSL https://bun.com/install | bash; bun_cmd="${BUN_INSTALL:-$HOME/.bun}/bin/bun"; fi; "$bun_cmd" x --package github:HeiTuz/MidjourneyWeb heituz-midjourney -- --target codex
+```
+
+Windows PowerShell:
+
+```powershell
+$bun = (Get-Command bun -ErrorAction SilentlyContinue).Source; if (!$bun) { irm https://bun.com/install.ps1 | iex; $root = if ($env:BUN_INSTALL) { $env:BUN_INSTALL } else { "$HOME\.bun" }; $bun = Join-Path $root 'bin\bun.exe' }; & $bun x --package github:HeiTuz/MidjourneyWeb heituz-midjourney -- --target codex
+```
 
 Bring a logged-in Midjourney account with the relevant plan/GPU allowance, the host's supported browser tool, and local file inspection tools. Codex uses the in-app browser by default; Claude Code and Hermes receive their own transport guidance. The package includes instructions, references and a small Node loopback media helper; it does not install a browser controller or private API client. The three installation payloads are tested locally; live browser execution on Claude Code/Hermes and Windows installation are not yet tested.
 

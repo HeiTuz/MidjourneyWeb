@@ -105,7 +105,17 @@ node scripts/install.mjs --target codex --force
 bunx --package github:HeiTuz/MidjourneyWeb heituz-midjourney -- --target codex
 ```
 
-소스와 배포 압축본은 [HeiTuz/MidjourneyWeb](https://github.com/HeiTuz/MidjourneyWeb)에서 받을 수 있어요. 원격 설치와 로컬 패키지 검증은 별개이며, 확인한 경로는 [검증 기록](skills/midjourney-web/references/evidence.md)에 남겨요. 확인된 기존 설치는 같은 명령에 `--force`를 붙여 업데이트해요. GitHub 설치에는 Git이 필요해요. Bun이 없으면 [공식 설치기](https://bun.com/docs/installation)로 최신 안정판을 설치하세요. macOS/Linux에서는 `curl -fsSL https://bun.com/install | bash`, Windows에서는 `powershell -c "irm bun.sh/install.ps1|iex"`를 실행한 다음 위 명령을 사용하세요.
+소스와 배포 압축본은 [HeiTuz/MidjourneyWeb](https://github.com/HeiTuz/MidjourneyWeb)에서 받을 수 있어요. 원격 설치와 로컬 패키지 검증은 별개이며, 확인한 경로는 [검증 기록](skills/midjourney-web/references/evidence.md)에 남겨요. 확인된 기존 설치는 같은 명령에 `--force`를 붙여 업데이트해요. GitHub 설치에는 Git이 필요해요. Bun이 없는 환경에서는 아래 명령이 [공식 설치기](https://bun.com/docs/installation)로 최신 안정판을 설치한 다음 MidjourneyWeb까지 설치해요.
+
+```sh
+bun_cmd="$(command -v bun || true)"; if [ -z "$bun_cmd" ]; then curl -fsSL https://bun.com/install | bash; bun_cmd="${BUN_INSTALL:-$HOME/.bun}/bin/bun"; fi; "$bun_cmd" x --package github:HeiTuz/MidjourneyWeb heituz-midjourney -- --target codex
+```
+
+Windows PowerShell:
+
+```powershell
+$bun = (Get-Command bun -ErrorAction SilentlyContinue).Source; if (!$bun) { irm https://bun.com/install.ps1 | iex; $root = if ($env:BUN_INSTALL) { $env:BUN_INSTALL } else { "$HOME\.bun" }; $bun = Join-Path $root 'bin\bun.exe' }; & $bun x --package github:HeiTuz/MidjourneyWeb heituz-midjourney -- --target codex
+```
 
 ## 어디까지 확인했나요?
 
