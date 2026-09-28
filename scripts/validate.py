@@ -16,7 +16,8 @@ def validate(root: Path) -> list[str]:
     required = ['README.md', 'README.ko.md', 'package.json', 'scripts/install.mjs', 'LICENSE', 'RELEASING.md', 'AGENTS.md',
                 'hosts/codex.md', 'hosts/claude.md', 'hosts/hermes.md',
                 'skills/midjourney-web/agents/openai.yaml',
-                'skills/midjourney-web/scripts/media-bridge.mjs', 'scripts/verify-install.mjs']
+                'skills/midjourney-web/scripts/media-bridge.mjs', 'skills/midjourney-web/scripts/codex-browser.mjs',
+                'scripts/verify-install.mjs']
     for relative in required:
         if not (root / relative).is_file():
             errors.append(f'Missing {relative}')

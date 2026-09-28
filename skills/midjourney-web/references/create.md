@@ -27,7 +27,13 @@ Do not silently disable Personalization for 'reproducibility': it may be the use
 
 ## Image roles
 
-Open Add Images; choose a specific upload or upload the authorized local file using the current browser file-upload instructions. Observe the uploaded thumbnail before assigning it. Use the live role buttons or drop zones, then inspect the role and number of attachments. Reusing the uploads library avoids redundant uploads; a different filename alone does not prove image identity.
+Open Add Images. It shows the role columns (Attach to prompt, Style Reference, Image Prompt, video) above the uploads library. **Reuse before upload:** when the requested source is already in the library, select that item for the intended role instead of uploading the file again. Establish that it is the same source in this order:
+
+1. A task record that maps the local file's SHA256 to a library ID or reference short link.
+2. An earlier job that used the source. Its reference button shows the `s.mj.run/<code>` link and can add that reference with its role.
+3. A visual comparison of the local file with library thumbnails of the same aspect ratio.
+
+Library names are opaque IDs, not file hashes, and a filename alone does not prove identity. Upload only when no item matches, using the current browser file-upload instructions. Observe the new thumbnail, then record its library ID and, after the first job, the reference short link. A later job whose reference shows the same short link reused that upload. Use the live role columns or drop zones, then inspect the role and number of attachments.
 
 Before upload, record the source file's bytes, decoded dimensions and SHA256 in the local job record. The current Creating on Web article limits uploads to 10 MB. If conversion or reduction is needed, retain the original and record the derived upload separately. A downloaded reference must match the selected job/index, not a contact sheet, screenshot or neighboring candidate. After upload verify the pictured subject and role; a successful chooser call alone is not an uploaded reference.
 

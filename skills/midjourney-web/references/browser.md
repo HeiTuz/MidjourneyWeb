@@ -6,10 +6,28 @@ Use the currently supplied computer/browser tool contract. This skill supplies M
 
 - Follow current first-call routing before reusing or opening a tab. A supplied tab mention/ID or explicitly named browser takes precedence over general inventory. For an unspecified existing surface, inventory with `cua.getState()` and select observed tab/browser IDs. If none exists, `cua.createBrowserTab("iab", "https://www.midjourney.com", {visible:true})` is the tested entry for a user-visible login. Use other inventory APIs only when documented by the current tool.
 - An empty current-task tab list does not mean authentication was lost. If the earlier tab is unavailable, open the recorded job URL in the same in-app browser and inspect it before requesting another login. This recovered an authenticated page in the maintenance test. A tab owned by another active task must not be seized through a different automation surface.
-- After each action, obtain fresh AX state. Numeric indices are ephemeral. Many sidebar links and settings buttons have no accessible name. A URL in the current tree can identify navigation; a screenshot can identify an unlabeled icon. Never paste stored coordinates into a new viewport.
+- Verify each action's result before the next dependent action. Batch deterministic steps with their postcondition check in one tool call; request a full AX tree or a screenshot only when the next decision needs it. Numeric indices are ephemeral. Many sidebar links and settings buttons have no accessible name; try the stable anchors below before a screenshot. A URL in the current tree can identify navigation. Never paste stored coordinates into a new viewport.
 - Where AX omits selected states, inspect the screenshot or a supported read-only DOM view. Labels such as `Selected Select` can contain both action labels; they do not prove selection. Scope duplicate `Subtle`, `Standard`, `HD`, and `Low Motion` controls to the correct section.
 - Current navigation surfaces: Explore, Create, Edit, Organize, Personalize, Moodboards, Style Creator, Tasks, Help, Updates and account menu. Obtain current URLs from those links. Preserve the user's active creation folder and draft.
 - `Loading...`, disabled profile buttons and placeholder `0 points` are intermediate states, not an empty account or a plan restriction. Wait for the specific real content/enabled control using supported state waits, with a bounded deadline. Do independent work while a page loads. Report persistent loading rather than inventing account state.
+
+## Stable page anchors
+
+Observed on 2026-09-29 in the in-app browser. These describe the current website, not a published interface: when an anchor matches zero or several elements, stop using it and inspect fresh state.
+
+- **Navigation:** sidebar destinations are links with unique paths (`/imagine`, `/editor/new`, `/organize`, `/personalize`, `/moodboards`, `/style-creator`, `/tasks`). Navigate by the observed path instead of clicking an icon.
+- **Prompt input:** `textarea#desktop_input_bar`; the same Imagine bar also appears on job pages.
+- **Unnamed icon buttons:** most carry an SVG group whose ID names the icon, such as `Settings`, `Folders`, `Search` and `AddImageUncentered`. Select them with `button:has(svg g#<ID>)`. The IDs stay the same when the account's interface language changes; visible labels do not (Korean labels were observed). A few job-page and Editor controls have neither a name nor an icon ID.
+- **Result media:** `cdn.midjourney.com/<job>/0_<index>.<ext>` is the original; names containing `_<size>_N.webp` are previews. The original exists only after the job completes. The Create feed groups a job's candidates in one media grid, and that row's text contains the submitted prompt.
+- **Add Images panel:** role columns above the uploads library. Library thumbnails are `cdn.midjourney.com/u/<user>/<64-hex>_<size>_N.jpg`; the hex is an opaque library ID and matched none of 2,908 recent local file hashes. Clicking a thumbnail attaches it to the highlighted role column, and a selected thumbnail's wrapper gains the `outline` class. The column's clear button removes the attachments. A job shows its reference as an `s.mj.run/<code>` link.
+- **Controls that change data or start GPU work:** feed-card `TrashIcon` and `Heart` overlays, and job controls such as Rerun (`Reload`), Subtle/Strong variation, HD batch and animation. Never use them to navigate or wait.
+- **Lazy feed rows:** after a submission, an older row can enter the DOM for the first time. Treat a job as new only when it appears above the previous top row and its row text matches the submitted prompt.
+- **Editor brush strokes** remain coordinate actions. Derive them from the current canvas bounding box, not from stored screen positions.
+
+## Unresponsive tabs and waits
+
+- A single locator wait in the in-app browser ends after about 3 s whatever timeout is requested. Wait for a condition in repeated slices within one deadline. Right after navigation an element can be re-rendered, so one failed read there is not evidence of absence.
+- On 2026-09-29 a long-lived hidden tab stopped reacting to clicks (no focus change, no panel, no file chooser) while page reads still worked; a fresh visible tab responded normally. If a harmless action leaves no trace twice, open a fresh tab rather than switching to coordinates.
 
 ## Login and recovery
 

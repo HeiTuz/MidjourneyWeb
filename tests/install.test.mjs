@@ -44,6 +44,14 @@ test('dry run creates no destination and validates the payload', t => {
   assert.equal(fs.existsSync(path.dirname(f.dest)), false);
 });
 
+test('Codex browser helpers ship only with the Codex payload', t => {
+  const f = fixture(t);
+  const ships = host => payloadFiles(f.source, host).some(file => file.to === 'scripts/codex-browser.mjs');
+  assert.equal(ships('codex'), true);
+  assert.equal(ships('claude'), false);
+  assert.equal(ships('hermes'), false);
+});
+
 test('installed copy survives removal of its source checkout', t => {
   const f = fixture(t);
   install([{ host: 'codex', destination: f.dest }], f.options);
