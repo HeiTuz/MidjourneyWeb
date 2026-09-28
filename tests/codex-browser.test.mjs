@@ -8,6 +8,7 @@ import {
   ORIGIN, PROMPT_INPUT, jobURL, parseJobHref, newTopJobIds, newJobLinkSelector, iconSelector, parseMediaSrc,
   promptMatches, classifySubmission, imageInfo, pickDisplayedOriginal, copyNoOverwrite, submitPrompt, waitUntil,
   readJobRowText, readCandidates, saveCandidate, parseLibrarySrc, sameAspectItems, listLibraryImages, attachLibraryImage,
+  ROLE_ICONS, referenceKey, sameReferences, readReferences, clearReferences,
 } from '../skills/midjourney-web/scripts/codex-browser.mjs';
 
 const A = '11111111-1111-4111-8111-111111111111';
@@ -15,6 +16,9 @@ const B = '22222222-2222-4222-8222-222222222222';
 const OLD = '33333333-3333-4333-8333-333333333333';
 const NEW = '44444444-4444-4444-8444-444444444444';
 const PROMPT = 'A red ceramic cube on a walnut table, soft window light --ar 16:9 --raw';
+const LIB = 'ab'.repeat(32);
+const LIB2 = 'cd'.repeat(32);
+const libSrc = id => 'https://cdn.midjourney.com/u/' + A + '/' + id + '_384_N.jpg';
 
 // ---- image builders with valid container structure ----
 function jpeg(width, height, sof = 0xc0) {
@@ -63,7 +67,7 @@ function matches(node, selector) {
 function feedDom(ids, rows = {}) {
   const rowNodes = ids.map(id => el({ text: (rows[id] ?? '') + ' Rerun', children: [0, 1, 2, 3].map(i => el({ href: '/jobs/' + id + '?index=' + i })) }));
   const body = el({ children: [el({ text: rowNodes.map(row => row.innerText).join(' '), children: rowNodes })] });
-  return { body, images: [], querySelector: selector => body.querySelectorAll(selector)[0] ?? null };
+  return { body, images: [], querySelector: selector => body.querySelectorAll(selector)[0] ?? null, getElementById: () => null };
 }
 function img(src, { width = 960, height = 1200, complete = true, rect = [0, 0, 400, 500] } = {}) {
   return { currentSrc: src, naturalWidth: complete ? width : 0, naturalHeight: complete ? height : 0, complete,
@@ -223,12 +227,16 @@ test('submission preserves drafts, refuses bad read-back or an unloaded feed wit
   assert.equal(unparsed.state.presses, 0);
   const elsewhere = submitTab({ url: ORIGIN + '/jobs/' + A + '?index=0' });
   assert.equal((await submitPrompt(elsewhere.tab, PROMPT)).status, 'wrong-page');
+  const guarded = submitTab();
+  assert.equal((await submitPrompt(guarded.tab, PROMPT, { references: { style: [LIB] } })).status, 'references-mismatch');
+  assert.equal(guarded.state.presses, 0);
+  await assert.rejects(submitPrompt(submitTab().tab, PROMPT, { references: { styles: [] } }));
 });
 
 test('submission skips remounted older rows, presses Enter once and never retries', async () => {
   const rows = { [NEW]: 'Submitting... ' + PROMPT, [OLD]: 'An older prompt about something else entirely', [A]: 'top', [B]: 'second' };
   const ok = submitTab({ feeds: [[A, B], [A, B, OLD], [NEW, A, B, OLD]], rows });
-  const result = await submitPrompt(ok.tab, PROMPT);
+  const result = await submitPrompt(ok.tab, PROMPT, { references: {} });
   assert.deepEqual([result.status, result.jobId, ok.state.presses], ['submitted', NEW, 1]);
   const slow = submitTab({ feeds: [[A, B], [NEW, A, B]], rows, slowTicks: 3 });
   const late = await submitPrompt(slow.tab, PROMPT);
@@ -325,10 +333,6 @@ test('saving exports only a verified original of the requested candidate', async
   await assert.rejects(saveCandidate(jobTab({ index: 2, images: shown(2), bundle: ok(good) }), A, 2, 'relative/dir'));
 });
 
-const LIB = 'ab'.repeat(32);
-const LIB2 = 'cd'.repeat(32);
-const libSrc = id => 'https://cdn.midjourney.com/u/' + A + '/' + id + '_384_N.jpg';
-
 test('library thumbnails yield opaque IDs and same-aspect candidates', () => {
   assert.deepEqual(parseLibrarySrc(libSrc(LIB)), { libraryId: LIB });
   for (const src of [cdn(A, 0), 'https://cdn.midjourney.com/u/' + A + '/' + LIB + '.jpg', 'https://example.com/u/' + A + '/' + LIB + '_384_N.jpg']) {
@@ -339,43 +343,97 @@ test('library thumbnails yield opaque IDs and same-aspect candidates', () => {
   assert.throws(() => sameAspectItems(items, 0, 10));
 });
 
-// Library tab: clicking an item marks its wrapper with the outline class when attachOnClick is true.
-function libraryTab({ ids = [LIB, LIB2], selected = [], attachOnClick = true } = {}) {
-  const state = { clicks: 0, selected: new Set(selected) };
-  const images = () => ids.map(id => ({ currentSrc: libSrc(id), naturalWidth: 384, naturalHeight: 480, parentElement: { className: state.selected.has(id) ? 'h-0 outline p-3' : 'h-0 false' } }));
-  const idIn = selector => (selector.match(/\/([0-9a-f]{64})_/) || [])[1];
+// Imagine bar with role columns; attachments are background images, as on the site. A feed row
+// outside the bar carries the same SubjectReferenceIcon and its own reference.
+function node(tagName, { id = '', style = '', children = [] } = {}) {
+  const n = { tagName, id, children, parentElement: null, getAttribute: name => (name === 'style' ? style || null : null) };
+  for (const child of children) child.parentElement = n;
+  return n;
+}
+function barDom({ columns, rowShown, images }) {
+  const bg = key => node('DIV', { style: 'background-image: url("' + libSrc(key).replace('_384_', '_128_') + '"); background-size: cover;' });
+  const column = role => node('DIV', { children: [node('svg', { children: [node('g', { id: ROLE_ICONS[role] })] }), ...columns[role].map(bg)] });
+  const feed = node('DIV', { children: [node('DIV', { children: [node('g', { id: ROLE_ICONS.edit }), bg(LIB2)] })] });
+  const bar = node('DIV', { children: [node('TEXTAREA', { id: 'desktop_input_bar' }), ...(rowShown ? [node('DIV', { children: Object.keys(ROLE_ICONS).map(column) })] : [])] });
+  const body = node('BODY', { children: [feed, bar] });
+  const all = n => n.children.flatMap(child => [child, ...all(child)]);
+  return { body, images, getElementById: id => all(body).find(n => n.id === id) ?? null };
+}
+// Clicking a role header selects that column (unless selectOnClick is false); clicking a library
+// item attaches it to the selected column (unless attachOnClick is false).
+function roleTab({ columns = {}, rowShown = true, library = [LIB, LIB2], outlined = [], selectOnClick = true, attachOnClick = true, clearOnClick = true } = {}) {
+  const state = { columns: { edit: [], style: [], image: [], ...structuredClone(columns) }, active: 'edit', clicks: [], rowShown };
+  const images = library.map(id => ({ currentSrc: libSrc(id), naturalWidth: 384, naturalHeight: 480, parentElement: { className: outlined.includes(id) ? 'h-0 outline p-3' : 'h-0 false' } }));
+  const locator = selector => ({
+    filter: () => locator(selector),
+    first: () => locator(selector),
+    last: () => locator(selector),
+    locator: child => locator(child),
+    count: async () => {
+      const item = selector.match(/img\[src\*="\/([0-9a-f]{64})_"\]/);
+      if (item) return library.filter(id => id === item[1]).length;
+      return /^svg:has\(g#|TrashIcon/.test(selector) && state.rowShown ? 1 : 0;
+    },
+    click: async () => {
+      state.clicks.push(selector);
+      const item = selector.match(/img\[src\*="\/([0-9a-f]{64})_"\]/);
+      const role = Object.keys(ROLE_ICONS).find(r => selector === 'svg:has(g#' + ROLE_ICONS[r] + ')');
+      if (role) { if (selectOnClick) state.active = role; } else if (item) {
+        if (attachOnClick && !state.columns[state.active].includes(item[1])) state.columns[state.active].push(item[1]);
+      } else if (/TrashIcon/.test(selector) && clearOnClick) for (const r of Object.keys(state.columns)) state.columns[r] = [];
+    },
+  });
   return {
     state,
     playwright: {
-      evaluate: async fn => inDom({ images: images(), body: el(), querySelector: () => null }, () => fn()),
-      locator: selector => {
-        const id = idIn(selector);
-        const count = () => (selector.includes('outline') ? Number(state.selected.has(id)) : ids.filter(x => x === id).length);
-        return {
-          count: async () => count(),
-          click: async () => { state.clicks += 1; if (attachOnClick) state.selected.add(id); },
-          first: () => ({ waitFor: async () => { if (!count()) throw new Error('timed out'); } }),
-        };
-      },
+      locator,
+      evaluate: async (fn, arg) => inDom(barDom({ columns: state.columns, rowShown: state.rowShown, images }), () => fn(arg)),
+      waitForTimeout: async () => {},
     },
   };
 }
 
-test('library items attach once and only report success when selected', async () => {
-  const listed = await listLibraryImages(libraryTab({ selected: [LIB2] }));
+test('role columns are read inside the Imagine bar only', async () => {
+  assert.equal(referenceKey('background-image: url("' + libSrc(LIB).replace('_384_', '_128_') + '")'), LIB);
+  assert.equal(referenceKey("background-image: url('https://s.mj.run/abc?thumb=true')"), 'https://s.mj.run/abc');
+  assert.equal(referenceKey('color: red'), null);
+  assert.deepEqual(await readReferences(roleTab({ columns: { style: [LIB] } })), { edit: [], style: [LIB], image: [] });
+  assert.equal(await readReferences(roleTab({ rowShown: false })), null);
+  assert.equal(sameReferences({ style: [LIB] }, { edit: [], style: [LIB], image: [] }), true);
+  assert.equal(sameReferences({}, { edit: [], style: [LIB], image: [] }), false);
+  assert.equal(sameReferences({}, null), true);
+  assert.throws(() => sameReferences({ styles: [LIB] }, null));
+});
+
+test('attachment is confirmed per role and never short-circuits on another role', async () => {
+  const listed = await listLibraryImages(roleTab({ outlined: [LIB2] }));
   assert.deepEqual(listed.map(item => [item.libraryId, item.ratio, item.selected]), [[LIB, 0.8, false], [LIB2, 0.8, true]]);
-  const done = libraryTab({ selected: [LIB] });
-  assert.equal((await attachLibraryImage(done, LIB)).status, 'already-attached');
-  assert.equal(done.state.clicks, 0);
-  const fresh = libraryTab();
-  assert.equal((await attachLibraryImage(fresh, LIB)).status, 'attached');
-  assert.equal(fresh.state.clicks, 1);
-  const missing = libraryTab({ ids: [LIB2] });
-  assert.equal((await attachLibraryImage(missing, LIB)).status, 'library-item-not-found');
-  assert.equal(missing.state.clicks, 0);
-  const doubled = libraryTab({ ids: [LIB, LIB] });
-  assert.equal((await attachLibraryImage(doubled, LIB)).status, 'library-item-ambiguous');
-  const ignored = libraryTab({ attachOnClick: false });
-  assert.equal((await attachLibraryImage(ignored, LIB, { timeoutMs: 30 })).status, 'attach-unconfirmed');
-  await assert.rejects(attachLibraryImage(fresh, 'not-an-id'));
+  const same = roleTab({ columns: { style: [LIB] } });
+  assert.equal((await attachLibraryImage(same, LIB, 'style')).status, 'already-attached');
+  assert.equal(same.state.clicks.length, 0);
+  const other = roleTab({ columns: { style: [LIB] } });
+  const added = await attachLibraryImage(other, LIB, 'image');
+  assert.deepEqual([added.status, added.references.style, added.references.image], ['attached', [LIB], [LIB]]);
+  const unselected = roleTab({ selectOnClick: false });
+  const stray = await attachLibraryImage(unselected, LIB, 'style', { timeoutMs: 20 });
+  assert.deepEqual([stray.status, stray.references.edit, stray.references.style], ['attach-unconfirmed', [LIB], []]);
+  assert.equal((await attachLibraryImage(roleTab({ attachOnClick: false }), LIB, 'edit', { timeoutMs: 20 })).status, 'attach-unconfirmed');
+  const missing = roleTab({ library: [LIB2] });
+  assert.equal((await attachLibraryImage(missing, LIB, 'edit')).status, 'library-item-not-found');
+  assert.equal(missing.state.clicks.length, 0);
+  assert.equal((await attachLibraryImage(roleTab({ library: [LIB, LIB] }), LIB, 'edit')).status, 'library-item-ambiguous');
+  assert.equal((await attachLibraryImage(roleTab({ rowShown: false }), LIB, 'edit')).status, 'role-row-not-shown');
+  await assert.rejects(attachLibraryImage(roleTab(), LIB, 'styles'));
+  await assert.rejects(attachLibraryImage(roleTab(), 'not-an-id', 'edit'));
+});
+
+test('clearing uses the bar button and confirms empty columns', async () => {
+  const empty = roleTab();
+  assert.equal((await clearReferences(empty)).status, 'already-empty');
+  assert.equal(empty.state.clicks.length, 0);
+  const full = roleTab({ columns: { edit: [LIB], image: [LIB2] } });
+  const cleared = await clearReferences(full);
+  assert.deepEqual([cleared.status, cleared.references], ['cleared', { edit: [], style: [], image: [] }]);
+  const stuck = await clearReferences(roleTab({ columns: { edit: [LIB] }, clearOnClick: false }), { timeoutMs: 20 });
+  assert.deepEqual([stuck.status, stuck.references.edit], ['clear-unconfirmed', [LIB]]);
 });

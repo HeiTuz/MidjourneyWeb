@@ -15,6 +15,9 @@ export const JOB_LINKS = 'a[href*="/jobs/"]';
 // SVG group IDs observed inside otherwise unnamed icon buttons (2026-09-29).
 export const ICONS = Object.freeze({ addImage: 'AddImageUncentered', settings: 'Settings', folders: 'Folders', search: 'Search' });
 export const MUTATING_ICONS = Object.freeze(['TrashIcon', 'Heart', 'Reload', 'SpotlightPin']);
+// Role columns of the Imagine bar, identified by their header icons. Feed rows also use
+// SubjectReferenceIcon, so role lookups are always scoped to the bar.
+export const ROLE_ICONS = Object.freeze({ edit: 'SubjectReferenceIcon', style: 'StyleReferenceIcon', image: 'ImagePromptIcon' });
 
 const UUID = '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}';
 const JOB_ID_RE = new RegExp(`^${UUID}$`);
@@ -110,6 +113,30 @@ export function sameAspectItems(items, width, height, tolerance = 0.01) {
   const target = width / height;
   return items.filter(item => Math.abs(item.ratio - target) <= tolerance * target);
 }
+
+// A role-column attachment is drawn as a background image: library uploads become their
+// library ID; any other reference keeps its URL without the query string.
+export function referenceKey(style) {
+  const url = (String(style ?? '').match(/url\(\s*["']?([^"')]+)["']?\s*\)/) || [])[1];
+  if (!url) return null;
+  return parseLibrarySrc(url)?.libraryId ?? url.replace(/[?#].*$/, '');
+}
+
+function assertRole(role) {
+  if (!Object.hasOwn(ROLE_ICONS, role)) throw new Error(`Unknown role: ${role}; use edit, style or image`);
+  return role;
+}
+
+export function sameReferences(expected, actual) {
+  for (const role of Object.keys(expected ?? {})) assertRole(role);
+  return Object.keys(ROLE_ICONS).every(role => {
+    const want = new Set(expected?.[role] ?? []);
+    const have = new Set(actual?.[role] ?? []);
+    return want.size === have.size && [...want].every(key => have.has(key));
+  });
+}
+
+const isEmptyReferences = references => !references || Object.keys(ROLE_ICONS).every(role => !references[role]?.length);
 
 const squash = text => String(text ?? '').replace(/\s+/g, ' ').trim().toLowerCase();
 
@@ -282,6 +309,62 @@ export async function listLibraryImages(tab) {
   return items;
 }
 
+// Page function: find the Imagine bar (the nearest ancestor of the prompt input that holds all
+// role icons), then collect background-image styles inside each role column.
+const SCAN_REFERENCES = roleIcons => {
+  const ids = Object.values(roleIcons);
+  const walk = (node, out = []) => { for (const child of node.children || []) { out.push(child); walk(child, out); } return out; };
+  const holds = (node, id) => node.id === id || walk(node).some(child => child.id === id);
+  let bar = null;
+  for (let node = document.getElementById('desktop_input_bar')?.parentElement; node; node = node.parentElement) {
+    if (ids.every(id => holds(node, id))) { bar = node; break; }
+  }
+  if (!bar) return null;
+  const inBar = walk(bar);
+  const result = {};
+  for (const [role, id] of Object.entries(roleIcons)) {
+    let column = null;
+    for (let node = inBar.find(child => child.id === id); node && node !== bar; node = node.parentElement) {
+      if (ids.some(other => other !== id && holds(node, other))) break;
+      column = node;
+    }
+    result[role] = column ? [column, ...walk(column)].map(node => (node.getAttribute && node.getAttribute('style')) || '').filter(style => style.includes('url(')) : [];
+  }
+  return result;
+};
+
+// Attachments per role column, e.g. { edit: [libraryId], style: [], image: [] }; null when the
+// role row is not shown (no attachments and the Add Images panel closed).
+export async function readReferences(tab) {
+  const styles = await tab.playwright.evaluate(SCAN_REFERENCES, { ...ROLE_ICONS });
+  if (!styles) return null;
+  return Object.fromEntries(Object.keys(ROLE_ICONS).map(role => [role, [...new Set((styles[role] ?? []).map(referenceKey).filter(Boolean))]]));
+}
+
+function imagineBar(tab) {
+  const pw = tab.playwright;
+  let bar = pw.locator('div').filter({ has: pw.locator(PROMPT_INPUT) });
+  for (const id of Object.values(ROLE_ICONS)) bar = bar.filter({ has: pw.locator(`g#${id}`) });
+  return bar.last();
+}
+
+function roleHeaderIcon(tab, role) {
+  const pw = tab.playwright;
+  let column = imagineBar(tab).locator('div').filter({ has: pw.locator(`g#${ROLE_ICONS[role]}`) });
+  for (const [other, id] of Object.entries(ROLE_ICONS)) if (other !== role) column = column.filter({ hasNot: pw.locator(`g#${id}`) });
+  return column.first().locator(`svg:has(g#${ROLE_ICONS[role]})`).first();
+}
+
+async function pollReferences(tab, done, deadline) {
+  for (;;) {
+    const references = await readReferences(tab);
+    if (done(references)) return { ok: true, references };
+    const left = deadline - Date.now();
+    if (left <= 0) return { ok: false, references };
+    await tab.playwright.waitForTimeout(Math.min(300, left));
+  }
+}
+
 // Open the Add Images panel, which shows the role columns and the uploads library.
 export async function openLibrary(tab, { timeoutMs = 8000 } = {}) {
   const shown = tab.playwright.locator('img[src*="cdn.midjourney.com/u/"]');
@@ -296,28 +379,48 @@ export async function openLibrary(tab, { timeoutMs = 8000 } = {}) {
   return { status: 'open', items: await listLibraryImages(tab) };
 }
 
-// Attach an existing upload to the highlighted role column without uploading again.
-// Success is the library item's selected outline; the caller still checks the role column.
-export async function attachLibraryImage(tab, libraryId, { timeoutMs = 8000 } = {}) {
+// Attach an existing upload to one role column (edit = Attach to prompt, style, image) without
+// uploading again. Success means that role column now shows this library ID. The same upload
+// may sit in several roles; the library thumbnail's outline does not say which.
+export async function attachLibraryImage(tab, libraryId, role, { timeoutMs = 8000 } = {}) {
   assertLibraryId(libraryId);
-  const selected = tab.playwright.locator(`div[class~="outline"] > img[src*="/${libraryId}_"]`);
-  if (await selected.count() > 0) return { status: 'already-attached', libraryId };
+  assertRole(role);
+  const before = await readReferences(tab);
+  if (!before) return { status: 'role-row-not-shown', libraryId, role, next: 'Open the uploads library first. Nothing was attached.' };
+  if (before[role].includes(libraryId)) return { status: 'already-attached', libraryId, role, references: before };
   const item = tab.playwright.locator(`img[src*="/${libraryId}_"]`);
   const matches = await item.count();
   if (matches !== 1) {
-    return { status: matches ? 'library-item-ambiguous' : 'library-item-not-found', libraryId, next: 'Open the uploads library and list its items. Nothing was attached.' };
+    return { status: matches ? 'library-item-ambiguous' : 'library-item-not-found', libraryId, role, references: before, next: 'Open the uploads library and list its items. Nothing was attached.' };
   }
+  const header = roleHeaderIcon(tab, role);
+  if (await header.count() !== 1) return { status: 'role-column-not-found', libraryId, role, references: before, next: 'Nothing was attached.' };
+  await header.click();
   await item.click();
-  if (!await waitUntil(selected.first(), 'attached', Date.now() + timeoutMs)) {
-    return { status: 'attach-unconfirmed', libraryId, next: 'Inspect the role columns before submitting.' };
-  }
-  return { status: 'attached', libraryId, next: 'Confirm that the intended role column shows this image before submitting.' };
+  const outcome = await pollReferences(tab, now => Boolean(now?.[role]?.includes(libraryId)), Date.now() + timeoutMs);
+  if (!outcome.ok) return { status: 'attach-unconfirmed', libraryId, role, references: outcome.references, next: 'Inspect the role columns and clear stray attachments before submitting.' };
+  return { status: 'attached', libraryId, role, references: outcome.references };
+}
+
+// Remove every attachment with the Imagine bar's own clear button. The feed's delete button
+// uses the same TrashIcon, so the button is looked up only inside the bar.
+export async function clearReferences(tab, { timeoutMs = 5000 } = {}) {
+  const before = await readReferences(tab);
+  if (isEmptyReferences(before)) return { status: 'already-empty', references: before };
+  const button = imagineBar(tab).locator('button:has(svg g#TrashIcon)');
+  if (await button.count() !== 1) return { status: 'clear-button-not-found', references: before };
+  await button.click();
+  const outcome = await pollReferences(tab, isEmptyReferences, Date.now() + timeoutMs);
+  return { status: outcome.ok ? 'cleared' : 'clear-unconfirmed', references: outcome.references };
 }
 
 // Fill the Imagine bar, read it back, press Enter once and identify the new job.
 // References, roles and settings must already be prepared and inspected.
-export async function submitPrompt(tab, text, { timeoutMs = 20000, replaceDraft = false } = {}) {
+// Pass references (for example { edit: [libraryId] }, or {} for none) to refuse submission
+// when the role columns differ, which also catches stale locked attachments.
+export async function submitPrompt(tab, text, { timeoutMs = 20000, replaceDraft = false, references } = {}) {
   if (typeof text !== 'string' || !text.trim()) throw new Error('Prompt text is required');
+  if (references !== undefined) sameReferences(references, {});
   const page = await currentURL(tab);
   if (!SITE_HOSTS.has(page.hostname) || !page.pathname.startsWith('/imagine')) {
     return { status: 'wrong-page', url: page.href, next: 'Open Create (/imagine) at the top of its feed.' };
@@ -328,7 +431,7 @@ export async function submitPrompt(tab, text, { timeoutMs = 20000, replaceDraft 
   if (draft.trim() && draft !== text && !replaceDraft) {
     return { status: 'draft-present', draft, next: 'Preserve the existing draft before replacing it. Nothing was submitted.' };
   }
-  if (!await waitUntil(tab.playwright.locator(JOB_LINKS).first(), 'attached', Date.now() + Math.min(timeoutMs, 10000))) {
+  if (!await waitUntil(tab.playwright.locator(JOB_LINKS).first(), 'attached', Date.now() + Math.min(timeoutMs, 5000))) {
     return { status: 'feed-not-ready', next: 'No existing job is visible, so a new job could not be identified. Nothing was submitted.' };
   }
   const before = await listJobIds(tab);
@@ -336,6 +439,12 @@ export async function submitPrompt(tab, text, { timeoutMs = 20000, replaceDraft 
   if (draft !== text) await input.fill(text);
   const typed = await input.evaluate(el => el.value);
   if (typed !== text) return { status: 'readback-mismatch', typed, next: 'Nothing was submitted.' };
+  if (references !== undefined) {
+    const actual = await readReferences(tab);
+    if (!sameReferences(references, actual)) {
+      return { status: 'references-mismatch', expected: references, actual, next: 'Fix the role columns. Nothing was submitted.' };
+    }
+  }
   const deadline = Date.now() + timeoutMs;
   let known = before.slice();
   const unknown = { status: 'submission-unknown', next: 'Enter was sent at most once. Reconcile the Create feed before any retry.' };
