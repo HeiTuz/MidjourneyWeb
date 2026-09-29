@@ -35,6 +35,8 @@ Open Add Images. It shows the role columns (Attach to prompt, Style Reference, I
 
 Library names are opaque IDs, not file hashes, and a filename alone does not prove identity. Upload only when no item matches, using the current browser file-upload instructions. Observe the new thumbnail, then record its library ID and, after the first job, the reference short link. A later job whose reference shows the same short link reused that upload. Select the intended role column before choosing the item, because one upload can sit in several roles at once. Then inspect every role column and the number of attachments.
 
+**A generated candidate needs no download or upload.** On its job page, Quick Edit attaches the displayed candidate to Attach to prompt and Use Style attaches it to Style Reference; the bar then shows that job ID and index. Image Prompt still needs an upload. A full page load empties the bar, so attach generated candidates before other references or reach the job through its feed row, and return to Create through the sidebar link. The submitted job shows the reference as an `s.mj.run/<code>` link.
+
 Before upload, record the source file's bytes, decoded dimensions and SHA256 in the local job record. The current Creating on Web article limits uploads to 10 MB. If conversion or reduction is needed, retain the original and record the derived upload separately. A downloaded reference must match the selected job/index, not a contact sheet, screenshot or neighboring candidate. After upload verify the pictured subject and role; a successful chooser call alone is not an uploaded reference.
 
 | Intent | Input role |
