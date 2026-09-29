@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const name = 'midjourney-web';
-const priority = ['claude', 'hermes', 'codex'];
+const priority = ['claude', 'codex'];
 const normalize = (host) => host === 'gpt' ? 'codex' : host;
 const exists = (p) => { try { fs.lstatSync(p); return true; } catch (e) { if (e.code === 'ENOENT') return false; throw e; } };
 const contains = (parent, child) => { const rel = path.relative(parent, child); return rel === '' || (!rel.startsWith('..' + path.sep) && rel !== '..' && !path.isAbsolute(rel)); };
@@ -38,7 +38,6 @@ export function parseArgs(argv) {
 export function destinationForTarget(home, host, env = {}) {
   if (host === 'codex') return path.join(env.CODEX_HOME || path.join(home, '.codex'), 'skills', name);
   if (host === 'claude') return path.join(home, '.claude', 'skills', name);
-  if (host === 'hermes') return path.join(home, '.hermes', 'skills', 'image-generation', name);
   throw new Error(`Unknown host: ${host}`);
 }
 
@@ -160,7 +159,7 @@ export function install(plans, { sourceRoot = root, home = os.homedir(), env = p
 async function main() {
   const opts = parseArgs(process.argv.slice(2));
   if (opts.help) {
-    console.log('MidjourneyWeb installer\n--target auto|all|codex|gpt|claude|hermes\n--dest <skill-directory>\n--force  update with backup\n--dry-run  show plan without writes\n--quiet  errors only\nLocal: node scripts/install.mjs --target codex');
+    console.log('MidjourneyWeb installer\n--target auto|all|codex|gpt|claude\n--dest <skill-directory>\n--force  update with backup\n--dry-run  show plan without writes\n--quiet  errors only\nLocal: node scripts/install.mjs --target codex');
     return;
   }
   const home = os.homedir();
@@ -169,7 +168,7 @@ async function main() {
     const suggested = detected[0] || 'codex';
     const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
     try {
-      const answer = (await rl.question(`Detected: ${detected.join(', ') || 'none'}. Target [${suggested}] (codex/claude/hermes/all): `)).trim();
+      const answer = (await rl.question(`Detected: ${detected.join(', ') || 'none'}. Target [${suggested}] (codex/claude/all): `)).trim();
       opts.target = normalize(answer || suggested);
       if (![...priority, 'all'].includes(opts.target)) throw new Error('Invalid target selection');
     } finally { rl.close(); }

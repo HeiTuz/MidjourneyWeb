@@ -5,7 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { install, parseArgs, plan, payloadFiles } from '../scripts/install.mjs';
+import { detectHosts, install, parseArgs, plan, payloadFiles } from '../scripts/install.mjs';
 import { verifyInstall } from '../scripts/verify-install.mjs';
 
 const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -30,9 +30,11 @@ test('auto selection uses directory existence only; explicit target and CODEX_HO
   const f = fixture(t);
   assert.equal(plan(parseArgs([]), f.home)[0].host, 'codex');
   for (const host of ['codex', 'hermes', 'claude']) fs.mkdirSync(path.join(f.home, '.' + host));
+  assert.deepEqual(detectHosts(f.home), ['claude', 'codex'], 'a .hermes directory is no longer an install host');
   fs.writeFileSync(path.join(f.home, '.claude', 'settings.json'), 'this is not parsed JSON');
   assert.equal(plan(parseArgs([]), f.home)[0].host, 'claude');
-  assert.equal(plan(parseArgs(['--target=all']), f.home).length, 3);
+  assert.equal(plan(parseArgs(['--target=all']), f.home).length, 2);
+  assert.throws(() => parseArgs(['--target=hermes']), /Unknown target/);
   const custom = path.join(f.home, 'codex-custom');
   assert.equal(plan(parseArgs(['--target=codex']), f.home, { CODEX_HOME: custom })[0].destination, path.join(custom, 'skills', 'midjourney-web'));
 });
@@ -49,7 +51,6 @@ test('Codex browser helpers ship only with the Codex payload', t => {
   const ships = host => payloadFiles(f.source, host).some(file => file.to === 'scripts/codex-browser.mjs');
   assert.equal(ships('codex'), true);
   assert.equal(ships('claude'), false);
-  assert.equal(ships('hermes'), false);
 });
 
 test('installed copy survives removal of its source checkout', t => {
@@ -119,7 +120,7 @@ test('payload excludes local notes and rejects escaping symlinks', t => {
 
 test('all hosts get their adapter and exactly one skill entry', t => {
   const f = fixture(t);
-  const plans = ['codex', 'claude', 'hermes'].map(host => ({ host, destination: path.join(f.home, 'test-' + host) }));
+  const plans = ['codex', 'claude'].map(host => ({ host, destination: path.join(f.home, 'test-' + host) }));
   install(plans, f.options);
   for (const p of plans) {
     assert.ok(fs.existsSync(path.join(p.destination, 'SKILL.md')));
@@ -185,14 +186,14 @@ test('packed npm payload excludes local data and runs offline from its binary', 
 
 test('verification catches stale payloads, wrong adapters and untracked installed data', t => {
   const f = fixture(t);
-  for (const host of ['codex', 'claude', 'hermes']) {
+  for (const host of ['codex', 'claude']) {
     const destination = path.join(f.home, host + '-verified');
     install([{ host, destination }], f.options);
     assert.deepEqual(verifyInstall(f.source, destination, host), []);
   }
   install([{ host: 'codex', destination: f.dest }], f.options);
   fs.appendFileSync(path.join(f.dest, 'SKILL.md'), '\nlocal change\n');
-  fs.copyFileSync(path.join(f.source, 'hosts', 'hermes.md'), path.join(f.dest, 'references', 'host.md'));
+  fs.copyFileSync(path.join(f.source, 'hosts', 'claude.md'), path.join(f.dest, 'references', 'host.md'));
   fs.writeFileSync(path.join(f.dest, 'private.log'), 'not a payload');
   const errors = verifyInstall(f.source, f.dest, 'codex');
   assert.ok(errors.includes('Content differs: SKILL.md'));

@@ -49,8 +49,8 @@ export function verifyInstall(sourceRoot, destination, host) {
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const [host, destination] = process.argv.slice(2);
-  if (!['codex', 'claude', 'hermes'].includes(host) || !destination || process.argv.length !== 4) {
-    console.error('Usage: node scripts/verify-install.mjs codex|claude|hermes <installed-skill-directory>');
+  if (!['codex', 'claude'].includes(host) || !destination || process.argv.length !== 4) {
+    console.error('Usage: node scripts/verify-install.mjs codex|claude <installed-skill-directory>');
     process.exitCode = 1;
   } else {
     const errors = verifyInstall(root, path.resolve(destination), host);

@@ -78,7 +78,6 @@ Requires **Node.js 18+**. The installer copies the runtime payload, so it stays 
 ```sh
 node scripts/install.mjs --target codex --dry-run
 node scripts/install.mjs --target claude
-node scripts/install.mjs --target hermes
 node scripts/install.mjs --target all
 node scripts/install.mjs --target codex --dest /custom/skills/midjourney-web
 node scripts/install.mjs --target codex --force
@@ -88,9 +87,8 @@ node scripts/install.mjs --target codex --force
 |---|---|
 | `codex` / `gpt` | `$CODEX_HOME/skills/midjourney-web`, default `~/.codex/skills/midjourney-web` |
 | `claude` | `~/.claude/skills/midjourney-web` |
-| `hermes` | `~/.hermes/skills/image-generation/midjourney-web` |
 
-Omit `--target` for directory-based detection. Interactive terminals offer a choice; CI and dry runs never prompt. Non-interactive auto mode uses the first detected host in `claude > hermes > codex` order, or Codex if none is detected. `all` means all detected hosts. Explicit options win; a custom destination without a host uses Codex unless it matches another standard destination. `--quiet` suppresses normal output and prompts.
+Omit `--target` for directory-based detection. Interactive terminals offer a choice; CI and dry runs never prompt. Non-interactive auto mode uses the first detected host in `claude > codex` order, or Codex if none is detected. `all` means all detected hosts. Explicit options win; a custom destination without a host uses Codex unless it matches another standard destination. `--quiet` suppresses normal output and prompts.
 
 `--force` replaces only a recognized MidjourneyWeb install and keeps a backup outside the skill discovery tree, under `~/.local/share/heituz/midjourney-web/backups`. It also migrates this project's original source symlink. Unrelated directories, files and symlinks are refused. To uninstall, remove the installed `midjourney-web` directory after preserving anything you added; keep the canonical checkout if you maintain the project. Skill discovery may require a new task.
 
@@ -112,7 +110,7 @@ Windows PowerShell:
 $bun = (Get-Command bun -ErrorAction SilentlyContinue).Source; if (!$bun) { irm https://bun.com/install.ps1 | iex; $root = if ($env:BUN_INSTALL) { $env:BUN_INSTALL } else { "$HOME\.bun" }; $bun = Join-Path $root 'bin\bun.exe' }; & $bun x --package github:HeiTuz/MidjourneyWeb heituz-midjourney -- --target codex
 ```
 
-Bring a logged-in Midjourney account with the relevant plan/GPU allowance, the host's supported browser tool, and local file inspection tools. Codex uses the in-app browser by default; Claude Code and Hermes receive their own transport guidance. The package includes instructions, references and a small Node loopback media helper. The Codex payload also includes a helper module for the in-app browser. It turns reference reuse (an existing upload, or a generated candidate by job ID and index, without downloading or uploading), submission, candidate checks and original-JPG export into single checked calls, and it confirms that each click lands on its target. Nothing installs a browser controller or private API client. The three installation payloads are tested locally; live browser execution on Claude Code/Hermes and Windows installation are not yet tested.
+Bring a logged-in Midjourney account with the relevant plan/GPU allowance, the host's supported browser tool, and local file inspection tools. Codex uses the in-app browser by default; Claude Code receives its own transport guidance. The package includes instructions, references and a small Node loopback media helper. The Codex payload also includes a helper module for the in-app browser. It turns reference reuse (an existing upload, or a generated candidate by job ID and index, without downloading or uploading), submission, candidate checks and original-JPG export into single checked calls, and it confirms that each click lands on its target. Nothing installs a browser controller or private API client. Both installation payloads are tested locally; live browser execution on Claude Code and Windows installation are not yet tested. Hermes is no longer an install target.
 
 ## What has been verified
 

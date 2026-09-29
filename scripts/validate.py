@@ -14,7 +14,7 @@ def validate(root: Path) -> list[str]:
     if not re.match(r'\A---\nname: midjourney-web\ndescription: [^\n]+\n---\n', content):
         errors.append('Invalid required skill frontmatter')
     required = ['README.md', 'README.ko.md', 'package.json', 'scripts/install.mjs', 'LICENSE', 'RELEASING.md', 'AGENTS.md',
-                'hosts/codex.md', 'hosts/claude.md', 'hosts/hermes.md',
+                'hosts/codex.md', 'hosts/claude.md',
                 'skills/midjourney-web/agents/openai.yaml',
                 'skills/midjourney-web/scripts/media-bridge.mjs', 'skills/midjourney-web/scripts/codex-browser.mjs',
                 'scripts/verify-install.mjs']
