@@ -2,6 +2,14 @@
 
 Reviewed 2026-09-12. Private job IDs, account data, prompt bodies, images and logs are excluded from this repository. See the [feature matrix](feature-matrix.md) for per-feature status and official links.
 
+## Release workflow confirmation — 2026-09-30
+
+The helper from commit `b6c6bdcc736dc8d7226505837af6c59a51a5c94b` was exercised in the connected Mac Codex in-app browser with three authorized GPU jobs: new still-life creation with an explicit empty reference set, editing a safe existing library upload, and editing candidate index 2 of the new creation by job identity. Each submission matched one new top-row job and its full prompt body, with no other new job reported. Each job completed four candidates. One selected full-resolution JPG per job was copied without re-encoding, checked for byte size and SHA256, and fully decoded as RGB at 1024×1024 using Pillow verify and Image.load. No new upload was needed.
+
+The library image appeared only in the Edit role. Quick Edit attached the exact generated candidate only to Edit, and the reference survived the sidebar return to Create. Both resulting jobs showed Edit reference metadata. The requested mug and sphere color changes were visible, and the surrounding still-life composition was visually retained; pixel identity was not tested. The uploaded source comparison used its 128-pixel reference preview, while the generated source was saved at full resolution.
+
+Disposable drafts confirmed `draft-present` and `navigation-would-clear`; a stale-reference check returned `references-mismatch` without submission. Checked clicks were aligned. One upload-edit attempt returned `input-not-found` before Enter; the input, draft, references and unchanged feed were inspected before the confirmed unsubmitted request was run. No unknown submission was resubmitted. `input-misaligned`, `navigation-pending`, `submission-unknown` and candidate `pending` were not reproduced in this confirmation and are not additional live passes. The operator attributed the initial long tool call to waiting for permission approval. Private job identities, exact prompts, originals and logs remain outside the repository.
+
 ## Codex helper fast path — 2026-09-29
 
 A review of eight earlier Codex sessions (399 Midjourney browser calls) found that tool execution took a median of 0.5 s, while the model round trip before each call took a median of 10 s. About 14% of actions were coordinate clicks, mostly on unnamed icons and Editor brush strokes. Read-only inspection of Create, a job page and the empty Editor found SVG group IDs inside most unnamed buttons. The same logs showed older feed rows entering the DOM after a submission. New-job detection therefore requires a row above the previous top and a prompt-text match.

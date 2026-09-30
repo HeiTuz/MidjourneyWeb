@@ -114,6 +114,8 @@ Bring a logged-in Midjourney account with the relevant plan/GPU allowance, the h
 
 ## What has been verified
 
+On 2026-09-30, three Codex helper jobs confirmed new creation, editing a safe existing upload and editing an exact generated candidate by job/index. Each completed four candidates and one saved, fully decoded 1024×1024 JPG. Draft and reference guards passed; color changes and surrounding composition were visually checked. Unexercised delay states remain outside this confirmation. See the [dated evidence](skills/midjourney-web/references/evidence.md).
+
 On 2026-09-13, one camera-direction Edit batch produced four saved 1456×816 JPGs. Rear views improved, while coherent whole-scene camera orbit remained unproven. The full Editor's Smart Select, erase, Undo and selection cleanup were exercised on the same source; full Editor generation was not. See [camera edit guidance](skills/midjourney-web/references/camera-edits.md) and the dated evidence entries.
 
 On 2026-09-23, one batch using both an Image Prompt and Style Reference produced four candidates and a verified 1456×816 JPG. A second batch used a localized erase mask in the full Editor and produced four candidates and a verified JPG. The reference batch did not achieve the requested camera action; the best masked edit changed the camera toward warm brown/red but only partly matched the requested color. The full Editor job appeared in Create. Two more batches used one reference role at a time with identical text and settings; each yielded four candidates and a verified JPG. Neither selected result lowered the camera, and the comparison did not establish causal role effects without a confirmed seed. See the [dated evidence](skills/midjourney-web/references/evidence.md).
@@ -129,11 +131,11 @@ A further full Editor batch used Smart Select on the painted photographer. The s
 - New V8.2 creation, JPG/PNG reference upload, targeted color editing, candidate comparison and final in-app file delivery passed. The selected JPG and optional PNG are 1024×1024.
 - A local erase mask and Undo were exercised. The media bridge saved six real comparison/original assets, and the package passed 20 Node tests.
 
-That full-suite result is from the earlier core-workflow checkpoint. Publication validation runs code-only tests and package checks; it does not run the installer or reinstall the local skill. CI follows the same code-only boundary.
+That test count belongs to the earlier core-workflow checkpoint. Release validation and live website checks are recorded separately. CI runs code-only tests and package checks; isolated installer checks are part of the release procedure.
 
 **JPG is the default; PNG is ready when needed.** The ordinary in-app Download Image event remains unreliable, so the skill uses the verified asset-export route and optional media bridge. The source bridge PNG matched the website export's decoded pixels; website-added metadata differed. An accidental feed-overlay variation was identified and counted within the approved four-job test budget, motivating direct job-URL navigation. HD/upscale, layered composition, other reference roles, seed-controlled reference effects, preference training, board/folder mutations, Style Creator, batch archives and video delivery remain untested.
 
-Read the [feature evidence matrix](skills/midjourney-web/references/feature-matrix.md), [verification record](skills/midjourney-web/references/evidence.md) and [official source map](skills/midjourney-web/references/sources.md), initially reviewed on **2026-09-12** with selected live checks added on **2026-09-23**. The matrix separates live UI/file checks, documentation-only workflows, plan gates and retired features. Purchases, publishing and destructive actions remain subject to the user's authorization and the host's action rules.
+Read the [feature evidence matrix](skills/midjourney-web/references/feature-matrix.md), [verification record](skills/midjourney-web/references/evidence.md) and [official source map](skills/midjourney-web/references/sources.md), initially reviewed on **2026-09-12** with selected live checks added through **2026-09-30**. The matrix separates live UI/file checks, documentation-only workflows, plan gates and retired features. Purchases, publishing and destructive actions remain subject to the user's authorization and the host's action rules.
 
 ## Build on it
 
